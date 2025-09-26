@@ -1,0 +1,8 @@
+<div class="daily-log">
+  <h2>Daily Task Log - {{ today }}</h2>
+  <div *ngFor="let task of tasks(); let i = index" class="task">
+    <input type="checkbox" [ngModel]="task.completed" (ngModelChange)="updateTask(i, $event)" />
+    <label>{{ task.name }}</label>
+  </div>
+  <button routerLink="/progress-chart">View Progress Chart</button>
+</div>
