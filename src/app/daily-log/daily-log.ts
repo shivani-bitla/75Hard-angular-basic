@@ -1,8 +1,8 @@
 import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
-import { TaskService, Task } from '../services/task.service';
+import { RouterLink, ActivatedRoute } from '@angular/router';
+import { TaskService, Task, DailyProgress } from '../services/task.service';
 
 @Component({
   selector: 'app-daily-log',
@@ -14,17 +14,31 @@ import { TaskService, Task } from '../services/task.service';
 })
 export class DailyLog {
   private taskService = inject(TaskService);
+  private route = inject(ActivatedRoute);
   tasks = this.taskService.tasks;
-  today = new Date().toISOString().split('T')[0];
+  date: string;
 
   constructor() {
-    const dailyProgress = this.taskService.getProgressForDate(this.today);
-    if (dailyProgress) {
-      this.taskService.tasks.set(dailyProgress.tasks);
-    }
+    this.date = this.route.snapshot.paramMap.get('date') || new Date().toISOString().split('T')[0];
+    this.taskService.getProgressForDate(this.date).subscribe({
+      next: (progress) => {
+        if (progress) {
+          this.taskService.tasks.set(progress.tasks);
+        } else {
+          this.taskService.tasks.set([...this.taskService.initialTasks]);
+        }
+      },
+      error: (err) => {
+        console.error('Failed to load progress:', err);
+        this.taskService.tasks.set([...this.taskService.initialTasks]);
+      }
+    });
   }
 
   updateTask(taskIndex: number, completed: boolean) {
-    this.taskService.updateTask(this.today, taskIndex, completed);
+    this.taskService.updateTask(this.date, taskIndex, completed).subscribe({
+      next: () => console.log('Task update successful'),
+      error: (err) => console.error('Task update error:', err)
+    });
   }
 }
