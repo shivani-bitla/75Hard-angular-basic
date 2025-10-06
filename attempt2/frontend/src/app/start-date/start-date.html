@@ -1,0 +1,7 @@
+<p>start-date works!</p>
+<h1>Submit a Date</h1>
+<div class="container">
+  <input type="date" [(ngModel)]="selectedDate" class="border p-2 mb-4 w-full" />
+  <button (click)="submitDate()" >Submit</button>
+  <p class="mt-4">{{ responseMessage }}</p>
+</div>
