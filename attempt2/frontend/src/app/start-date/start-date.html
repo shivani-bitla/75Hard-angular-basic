@@ -1,7 +1,7 @@
-<p>start-date works!</p>
-<h1>Submit a Date</h1>
-<div class="container">
-  <input type="date" [(ngModel)]="selectedDate" class="border p-2 mb-4 w-full" />
-  <button (click)="submitDate()" >Submit</button>
-  <p class="mt-4">{{ responseMessage }}</p>
-</div>
+<!-- start-date.html -->
+<form (ngSubmit)="submitDate()">
+  <label for="dateInput">Select Date:</label>
+  <input id="dateInput" type="date" [value]="selectedDate()" (input)="selectedDate.set($event.target.value)" required title="Choose a date">
+  <button type="submit">Submit Date</button>
+</form>
+<p>{{ responseMessage() }}</p>

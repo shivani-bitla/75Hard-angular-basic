@@ -1,0 +1,92 @@
+from fastapi import FastAPI, HTTPException
+from pymongo.mongo_client import MongoClient
+from pymongo.server_api import ServerApi
+from pymongo.errors import ConfigurationError, PyMongoError
+import sys
+import datetime, logging
+from models import User, Challenge, DailyLog
+import certifi
+
+app = FastAPI()
+
+
+uri = "mongodb+srv://test1:XbD37hFBN5zXQF1o@cluster0.rdzviva.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+
+try:
+    client = MongoClient(
+        uri,
+        server_api=ServerApi('1'),
+        tls=True,
+        tlsCAFile=certifi.where()
+    )
+    client.admin.command('ping')
+    logging.info("✅ Successfully connected to MongoDB Atlas!")
+except ConfigurationError:
+    logging.error("❌ Invalid URI host. Please verify your connection string.")
+    sys.exit(1)
+except PyMongoError as e:
+    logging.error(f"❌ MongoDB connection failed: {e}")
+    sys.exit(1)
+
+db = client["test"]
+users_col = db["users"]
+challenges_col = db["challenges"]
+daily_logs_col = db["daily_logs"]
+
+# Ensure at least one index or validation if needed
+users_col.create_index("user_id", unique=True)
+challenges_col.create_index("challenge_id", unique=True)
+daily_logs_col.create_index([("user_id", 1), ("date", 1)], unique=True)
+
+today_str = datetime.date.today().isoformat()
+dates_col = db["dates"]
+if dates_col.count_documents({}) == 0:
+    dates_col.insert_one({"_id": "current_date", "date": today_str})
+dates_col.create_index("date", unique=True)
+
+
+@app.get("/")
+async def root():
+    return {"message": "Challenge API is running"}
+
+@app.post("/users/")
+async def create_user(user: User):
+    """Create a new user"""
+    user_dict = user.dict(by_alias=True, exclude={"id"})
+    result = users_col.insert_one(user_dict)
+    user.id = result.inserted_id
+    return user
+
+@app.get("/users/{user_id}")
+async def get_user(user_id: str):
+    """Get user details"""
+    user = users_col.find_one({"user_id": user_id})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    user["_id"] = str(user["_id"])
+    return user
+
+@app.post("/challenges/")
+async def create_challenge(challenge: Challenge):
+    """Create a new challenge"""
+    challenge_dict = challenge.dict(by_alias=True, exclude={"id"})
+    result = challenges_col.insert_one(challenge_dict)
+    challenge.id = result.inserted_id
+    return challenge
+
+@app.post("/daily-logs/")
+async def create_daily_log(daily_log: DailyLog):
+    """Create a new daily log"""
+    daily_log_dict = daily_log.dict(by_alias=True, exclude={"id"})
+    result = daily_logs_col.insert_one(daily_log_dict)
+    daily_log.id = result.inserted_id
+    return daily_log
+
+@app.get("/health")
+async def health_check():
+    """Check DB connection status"""
+    try:
+        client.admin.command("ping")
+        return {"status": "ok", "database": "connected"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Database issue: {str(e)}")
