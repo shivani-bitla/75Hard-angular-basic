@@ -1,8 +1,7 @@
 
 import { Component, Input, OnChanges } from '@angular/core';
 import { NgStyle, CommonModule } from '@angular/common';
-
-type Status = 'complete' | 'incomplete' | 'untouched' | 'lastLeft';
+import { DayStatus } from '../days-calender';
 
 @Component({
   selector: 'div-show',
@@ -19,13 +18,14 @@ type Status = 'complete' | 'incomplete' | 'untouched' | 'lastLeft';
       border: none;
       color: white;
       font-weight: bold;
+      margin: 5px;
       cursor: pointer;
       border-radius: 8px; /* Optional: for a rounded square look */
     }
   `]
 })
 export class DivShow implements OnChanges {
-  @Input() status: Status = 'untouched'; // Default status
+  @Input() status: DayStatus = 'untouched'; // Default status
   currentStyles: { [key: string]: string; } = {};
 
   // Lifecycle hook that runs when the input property changes

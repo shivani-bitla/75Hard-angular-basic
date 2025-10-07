@@ -1,0 +1,4 @@
+.week-day{
+    display: grid;
+    grid-template-columns: min-content   min-content    min-content    min-content    min-content    min-content    min-content;
+}
