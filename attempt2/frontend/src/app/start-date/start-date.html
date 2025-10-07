@@ -1,7 +1,0 @@
-<!-- start-date.html -->
-<form (ngSubmit)="submitDate()">
-  <label for="dateInput">Select Date:</label>
-  <input id="dateInput" type="date" [value]="selectedDate()" (input)="selectedDate.set($event.target.value)" required title="Choose a date">
-  <button type="submit">Submit Date</button>
-</form>
-<p>{{ responseMessage() }}</p>

@@ -1,11 +1,13 @@
 .container {
-    height : 100vh;
-    display : flex;
-    flex-direction : column;
-    justify-content : center;
-    align-items : center;
-    background-color : #f3f4f6; /* Tailwind's gray-100 */
-    font-family : Arial, sans-serif;
-    padding : 20px;
-    
+    background-color: #FFFFE3 ;
+}
+.container1{
+    background-color:#FFF1E3 ;
+}
+.container2{
+    background-color:#F1FFE3 ;
+}   
+div{
+    height : 100px;
+    width:200px
 }
