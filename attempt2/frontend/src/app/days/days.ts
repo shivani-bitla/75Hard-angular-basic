@@ -1,30 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { DivShow } from '../div-show/div-show';
-import { NgFor } from '@angular/common';
-import { DaysCalender, DayStatus,DayData } from '../days-calender';
+import { DaysCalender, DayData, DayStatus } from '../days-calender';
+import { DatePipe, AsyncPipe } from '@angular/common';
+import { Observable } from 'rxjs';
 import { GenerateCalenderService } from '../generate-calender';
-
-
 
 @Component({
   selector: 'app-days',
-  imports: [DivShow, NgFor],
+  imports: [DivShow, DatePipe, AsyncPipe], // Add AsyncPipe to imports
   templateUrl: './days.html',
-  styleUrl: './days.css'
+  styleUrl: './days.css',
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush // Implement OnPush strategy
 })
 export class Days implements OnInit {
-  calendar!: DaysCalender;
-  completeStatus='complete';
-  days=this.calendar.calendarData
+  calendar$!: Observable<DaysCalender>; // Use Observable convention
+  completeStatus = 'complete';
 
-  // Inject the new service in the constructor
-  constructor(private generateCalenderService: GenerateCalenderService) { }
+  private calenderService = inject(GenerateCalenderService);
+
+  constructor() {}
 
   ngOnInit(): void {
-    // Call the service method with the correct name
-    const currentUser = 'JohnDoe';
-    this.calendar = this.generateCalenderService.getMockCalendar(currentUser);
+    // Fetch data and assign the observable to the class property
+    this.calendar$ = this.calenderService.getCalendarData();
   }
+
   getDayStatus(day: DayData, status: string): DayStatus {
     const count = day.tasks.filter(task => task.status === status).length;
     switch (count) {
@@ -37,5 +38,9 @@ export class Days implements OnInit {
       default:
         return 'incomplete';
     }
+  }
+  onDayClick(day: DayData): void {
+    console.log('Day clicked:', day);
+    
   }
 }

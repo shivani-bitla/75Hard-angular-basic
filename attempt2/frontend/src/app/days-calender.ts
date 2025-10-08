@@ -1,4 +1,5 @@
-import { TaskStatus } from './day-tasks';
+export type DayStatus = 'complete' | 'incomplete' | 'untouched' | 'lastLeft';
+export type TaskStatus = 'complete' | 'untouched' ;
 
 export interface Task {
   id: number;
@@ -6,9 +7,6 @@ export interface Task {
   status: TaskStatus;
 }
 
-export type DayStatus = 
-    'complete' | 'incomplete'   
-    | 'untouched' | 'lastLeft';
 
 export interface DayData {
   date: Date;

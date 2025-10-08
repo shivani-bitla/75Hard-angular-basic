@@ -5,18 +5,29 @@
 <div-show status="untouched"></div-show>
 <div-show status="lastLeft"></div-show>
 
-<p>check if things are working out fine with ngfor and area</p>
-<div class="week-day">
-  <div  *ngFor="let day of calendar.calendarData; let i = index">
-    <div-show [status]=getDayStatus(day,completeStatus)  ></div-show>
-  </div>
-</div>  
-<p>90 boxes without status varaible</p>
-<!--
-<div class="week-day">
-  @for ( day of days; track day.date ) {
-    <div-show [status]=getDayStatus(day,completeStatus)></div-show>
+<!-- Use *ngIf with the async pipe to prevent rendering until data is available -->
+
+@if (calendar$ | async; as calendar) {
+  <div> 
+  <h2>{{ calendar.username }}'s Calendar</h2>
+  
+  <!-- The data is now available in the `calendar` template variable -->
+  @for ( day of calendar.calendarData; track day.date ) {
+    <div-show [status]=getDayStatus(day,completeStatus) onclick="onDayClick(day)">
+      <p>{{day.date | date}}</p>
+    </div-show>
+    @for ( task of day.tasks; track task.id ) {
+      <!-- <span> {{task.id}} : {{task.task}} = {{task.status}} </span>
+      <br> -->
+    }
   }
 </div>
 
-  -->
+} @else {
+  <!-- Optional: display a loading message while waiting for the data -->
+  <p>Loading calendar data...</p>
+}
+
+
+<!--
+-->
