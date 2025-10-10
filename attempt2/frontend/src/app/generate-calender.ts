@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, throwError,filter } from 'rxjs';
-import { tap, catchError } from 'rxjs/operators';
-import { DaysCalender } from './days-calender';
+import { tap, catchError, map } from 'rxjs/operators';
+import { DaysCalender,Task } from './days-calender';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +13,38 @@ export class GenerateCalenderService {
   
   // Use a BehaviorSubject to store and emit the data
   private calendarDataSubject = new BehaviorSubject<DaysCalender | null>(null);
-  calendarData$ = this.calendarDataSubject.asObservable();
+  public calendarData$: Observable<DaysCalender> = this.calendarDataSubject.asObservable().pipe(
+      filter((data): data is DaysCalender => data !== null),
+      map(calendar => ({
+        ...calendar,
+        calendarData: calendar.calendarData.map(day => ({
+          ...day,
+          date: new Date(day.date),
+        })),
+      }))
+    );
 
-  constructor() {}
+  constructor() {
+    this.fetchCalendarData(); // Fetch data when the service is created
+  }
+
+  // Method to fetch data from the server and update the subject
+  private fetchCalendarData(): void {
+    this.http.get<DaysCalender>(this.calendarDataUrl).pipe(
+      map(calendar => ({
+        ...calendar,
+        calendarData: calendar.calendarData.map(day => ({
+          ...day,
+          date: new Date(day.date),
+        })),
+      })),
+      tap(data => this.calendarDataSubject.next(data)),
+      catchError(error => {
+        this.calendarDataSubject.error(error);
+        return throwError(() => new Error('Error loading calendar data'));
+      })
+    ).subscribe();
+  }
 
   // Fetch the data and store it in the BehaviorSubject
   getCalendarData(): Observable<DaysCalender> {
@@ -32,4 +61,21 @@ export class GenerateCalenderService {
       );
     }
   }
+
+  updateTaskStatus(dayDate: Date, taskId: number, newStatus: Task['status']): void {
+    const currentCalendar = this.calendarDataSubject.value;
+    if (currentCalendar) {
+      const dayToUpdate = currentCalendar.calendarData.find(
+        day => day.date.toISOString().split('T') === dayDate.toISOString().split('T')
+      );
+      if (dayToUpdate) {
+        const taskToUpdate = dayToUpdate.tasks.find(task => task.id === taskId);
+        if (taskToUpdate) {
+          taskToUpdate.status = newStatus;
+          this.calendarDataSubject.next(currentCalendar); // Emit the updated data
+        }
+      }
+    }
+  }
+
 }

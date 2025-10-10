@@ -5,7 +5,7 @@
   
   <!-- The data is now available in the `calendar` template variable -->
   @for ( day of calendar.calendarData; track day.date ) {
-    <div-show [status]=getDayStatus(day,completeStatus) (click)="onDayClick(day)"   [title]="day.date|date"></div-show>    
+    <div-show [status]=getDayStatus(day,completeStatus) (click)="onDayClick(day)"   ></div-show>    
   }
 </div>
 

@@ -1,25 +1,25 @@
 // src/app/div-show/div-show.ts
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { NgStyle, CommonModule } from '@angular/common';
-import { DayStatus } from '../days-calender';
+import { DayStatus  } from '../days-calender';
 
 @Component({
   selector: 'div-show',
   imports: [CommonModule, NgStyle],
   template: `
-    <button [ngStyle]="currentStyles" (click)="onButtonClick()" [title]="tooltipText">
+    <button [ngStyle]="currentStyles"  (click)="onButtonClick()" [title]="tooltipText">
       <ng-content></ng-content>
     </button>
   `,
   styles: [`
     button {
-      width: 50px;       /* Set a fixed width */
       height: 50px;      /* Set a fixed height to make it square */
       border: none;
-      color: white;
       font-weight: bold;
       margin: 5px;
       cursor: pointer;
+      min-width:50px;
+      max-width:300px;       /* Set a fixed width to make it square */
       border-radius: 8px; /* Optional: for a rounded square look */
     }
   `],
@@ -42,8 +42,8 @@ export class DivShow implements OnChanges {
 
   private setCurrentStyles(): void {
     const colorMap = {
-      'complete': '#135E4B',
-      'incomplete': '#A1D8B5',
+      'complete': '#135e4b89',
+      'incomplete': '#a1d8b59a',
       'untouched': '#CCDCDB',
       'lastLeft': '#4CB572'
     };

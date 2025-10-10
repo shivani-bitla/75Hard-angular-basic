@@ -1,11 +1,12 @@
 // src/app/day/day.component.ts
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DayData, Task } from '../days-calender';
 import { CommonModule, DatePipe } from '@angular/common';
 import { GenerateCalenderService } from '../generate-calender';
 import { Subscription } from 'rxjs';
 import { DivShow } from '../div-show/div-show';
+import { DayWithTaskNames } from '../day-resolver';
 
 @Component({
   selector: 'app-day',
@@ -16,9 +17,10 @@ import { DivShow } from '../div-show/div-show';
 })
 export class Day implements OnInit {
   private route = inject(ActivatedRoute);
+  private cdr = inject(ChangeDetectorRef);
   private calenderService = inject(GenerateCalenderService);
-  dayWithTaskNames: { date: Date; tasks: (Task & { name?: string })[] } | undefined;
   
+  dayWithTaskNames: DayWithTaskNames  | undefined;
 
   constructor() {
     console.log('Day component initialized'); // Debug log  
@@ -26,10 +28,6 @@ export class Day implements OnInit {
   
   dayData: DayData | undefined;
   displayTasks: (Task & { name: string; order: number })[] = [];
-  private subscription: Subscription | undefined;
-
-  // Define constant tasks here
-  
 
   ngOnInit(): void {
     // Access the resolved data
@@ -40,15 +38,17 @@ export class Day implements OnInit {
   }
 
   onButtonClick(task: Task): void {
-    console.log('Button clicked for task:', task); // Debug log
-    if (this.dayData) {
-      const taskToUpdate = this.dayData.tasks.find(t => t.id === task.id);
-      if (taskToUpdate) {
-        taskToUpdate.status = taskToUpdate.status === 'complete' ? 'untouched' : 'complete';
-      }
+    console.log('Button clicked for task:', task);
+    if (this.dayWithTaskNames) {
+      const dayDate = this.dayWithTaskNames.date;
+      const newStatus = task.status === 'complete' ? 'untouched' : 'complete';
+      console.log(newStatus);
+      // Call the service method to update the in-memory data
+      this.calenderService.updateTaskStatus(dayDate, task.id, newStatus);
     }
+    console.log('Button changed to:', task.status);
   }
-  newDataClick(): void {
+  resetDataClick(): void {
     
   }
 }

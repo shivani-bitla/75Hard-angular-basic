@@ -3,18 +3,15 @@
   @if (dayWithTaskNames) {
     <h2>Tasks for {{ dayWithTaskNames.date | date }}</h2>
     <div class="task-list">
-      <h3>Static Tasks</h3>
       @for (task of dayWithTaskNames.tasks; track task.id) {
-        <button class="task-button" (click)="onButtonClick({ id: task.id, status: 'untouched' })">
-          {{ task.name }}
-        </button>
-      }
-
-      <h3 class="dynamic-tasks">Dynamic Tasks</h3>
-      @for (task of dayWithTaskNames.tasks; track task.id) {
-        <div-show [status]="task.status" (dayClick)="onButtonClick(task)">
-          {{ task.name }}
-        </div-show>
+        <div-show
+        [status]="task.status"
+        (buttonClick)="onButtonClick({ id: task.id, status: 'untouched' })"
+        [tooltipText]="task.name"
+        class="task-button"
+        >
+        {{ task.name }}
+      </div-show>
       }
     </div>
   } @else {

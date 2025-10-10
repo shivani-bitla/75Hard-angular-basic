@@ -1,12 +1,17 @@
-.task-button{
-    width: 80dvw;
-    height: 40px;
-    border-radius: 8px;
-    margin:5px;
-    padding: 10px;
-    background-color: #f6ffb3c0;
+/* src/app/day/day.css */
+
+.task-button {
+  width: 80dvw;
+  height: 40px;
+  border-radius: 8px;
+  margin: 5px;
+  padding: 10px;
+  color: black;
+  max-height: 300px; /* Adjust as needed */
+  text-align: left;
+  display: grid;
 }
-.task-complete{
-    text-decoration: line-through;
-    color: rgb(184, 248, 179);
+.task-button.completed {
+  background-color: #4CAF50; /* Green */
+  color: white;
 }

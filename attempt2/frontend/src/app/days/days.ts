@@ -39,7 +39,8 @@ export class Days implements OnInit {
     this.firstDate$ = this.calendar$.pipe(
       filter(calendar => calendar !== null && calendar.calendarData.length > 0),
       map(calendar => calendar!.calendarData[0].date)
-    );console.log('First date observable set up'); // Debug log
+    );
+    console.log('First date observable set up'); // Debug log
     console.log(this.firstDate$); // Debug log  
     this.firstDate$.pipe(first()).subscribe(date => {
       this.firstDate = date;
