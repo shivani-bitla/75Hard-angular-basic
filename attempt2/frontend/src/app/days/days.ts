@@ -62,7 +62,9 @@ export class Days implements OnInit {
   }
 
   onDayClick(day: DayData): void {
-    const [dayDate] = new Date(day.date).toISOString().split('T');
-    this.router.navigate(['/day', dayDate]);
+    console.log('Day clicked:', day);
+    const dateObject = new Date(day.date);
+    const dateParam = dateObject.toISOString().split('T');
+    this.router.navigate(['/day', dateParam]);
   }
 }

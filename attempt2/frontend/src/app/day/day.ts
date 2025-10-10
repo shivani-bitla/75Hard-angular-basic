@@ -5,47 +5,38 @@ import { DayData, Task } from '../days-calender';
 import { CommonModule, DatePipe } from '@angular/common';
 import { GenerateCalenderService } from '../generate-calender';
 import { Subscription } from 'rxjs';
+import { DivShow } from '../div-show/div-show';
 
 @Component({
   selector: 'app-day',
   standalone: true,
-  imports: [CommonModule, DatePipe],
+  imports: [CommonModule, DatePipe,DivShow],
   templateUrl: './day.html',
   styleUrl: './day.css'
 })
 export class Day implements OnInit {
   private route = inject(ActivatedRoute);
   private calenderService = inject(GenerateCalenderService);
+  dayWithTaskNames: { date: Date; tasks: (Task & { name?: string })[] } | undefined;
+  
 
   constructor() {
     console.log('Day component initialized'); // Debug log  
   }
   
   dayData: DayData | undefined;
+  displayTasks: (Task & { name: string; order: number })[] = [];
   private subscription: Subscription | undefined;
 
   // Define constant tasks here
-  constantTasks: Task[] = [
-    { id: 1, task: 'Complete Project Proposal', status: 'untouched' },
-    { id: 2, task: 'Attend Team Meeting', status: 'untouched' },
-    { id: 3, task: 'Review Code Changes', status: 'untouched' },
-    { id: 4, task: 'Prepare Client Presentation', status: 'untouched' },
-    { id: 5, task: 'Respond to Emails', status: 'untouched' },
-    { id: 6, task: 'Update Documentation', status: 'untouched' }
-  ];
+  
 
   ngOnInit(): void {
-    // Get the resolved data directly from the route
+    // Access the resolved data
     this.route.data.subscribe(data => {
-      this.dayData = data['dayData'];
-      console.log('Resolved day data:', this.dayData);
+      this.dayWithTaskNames = data['dayWithTaskNames'];
+      console.log('Resolved day data:', this.dayWithTaskNames);
     });
-  }
-
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
   }
 
   onButtonClick(task: Task): void {

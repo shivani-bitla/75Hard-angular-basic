@@ -1,11 +1,11 @@
-import fs from 'fs'; // Import the file system module for Node.js
+import fs from 'fs';
 
 /**
- * Simple object structures to replace TypeScript interfaces for use in plain JS.
  * @typedef {'complete' | 'untouched'} TaskStatus
- * @typedef {{ id: number, task: string, status: TaskStatus }} Task
- * @typedef {{ date: Date, tasks: Task[] }} DayData
- * @typedef {{ username: string, calendarData: DayData[] }} DaysCalender
+ * @typedef {{ id: number, status: TaskStatus }} Task
+ * @typedef {{ id: number, name: string, order: number }} TaskList
+ * @typedef {{ date: string, tasks: Task[] }} DayData
+ * @typedef {{ username: string, calendarData: DayData[], taskList: TaskList[] }} DaysCalender
  */
 
 /**
@@ -25,77 +25,75 @@ function getRandomInt(min, max) {
  */
 function getMockCalendar(username) {
   const calendarData = [];
-  const numDays = getRandomInt(3,70);
+  const numDays = 90; // Generate data for 90 days total
   const statuses = ['complete', 'untouched'];
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
-  const startDate = new Date();
-  startDate.setDate(today.getDate() - numDays);
-  startDate.setHours(0, 0, 0, 0);
+  const taskNames = [
+    'Complete Project Proposal',
+    'Attend Team Meeting',
+    'Review Code Changes',
+    'Prepare Client Presentation',
+    'Respond to Emails',
+    'Update Documentation'
+  ];
+
+  const taskList = taskNames.map((name, index) => ({
+    id: index + 1,
+    name: name,
+    order: index + 1
+  }));
 
   const existingDates = new Set();
+  const numRandomDays = getRandomInt(3, 70);
+  const startDate = new Date();
+  startDate.setDate(today.getDate() - numRandomDays);
+  startDate.setHours(0, 0, 0, 0);
 
-  for (let i = 0; i < numDays; i++) {
-    let randomDate;
-    let randomTime;
+  // Generate random data for past and current days
+  for (let i = 0; i < numRandomDays; i++) {
+    const randomDate = new Date(startDate);
+    randomDate.setDate(startDate.getDate() + i);
 
-    do {
-      randomTime = startDate.getTime() + Math.random() * (today.getTime() - startDate.getTime());
-      randomDate = new Date(randomTime);
-      randomDate.setHours(0, 0, 0, 0);
-      randomDate.toDateString();
-    } while (existingDates.has(randomDate.getTime()));
-
-    existingDates.add(randomDate.getTime());
-
-    const numTasks = 6;
-    const tasks = [];
-
-    for (let j = 1; j <= numTasks; j++) {
-      // const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
-      const randomStatus = Math.random() < 0.7 ? 'complete' : 'untouched';
-      tasks.push({
-        id: j,
-        task: `Generated task ${j}`,
+    const tasks = taskList.map(task => {
+      const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+      return {
+        id: task.id,
         status: randomStatus
-      });
-    }
+      };
+    });
 
     calendarData.push({
-      date: randomDate,
+      date: randomDate.toISOString(),
       tasks: tasks
     });
   }
-  let fixedTasks = [];
-  const numTasks = 6;
-  for (let j = 1; j <= numTasks; j++) {
-      fixedTasks.push({
-        id: j,
-        task: `Generated task ${j}`,
-        status: 'untouched'
-      });
-    }
 
-  calendarData.sort((a, b) => a.date.getTime() - b.date.getTime());
-  for (let i=numDays;i<90;i++) {
-    const futureDate = new Date();
-    futureDate.setDate(today.getDate() + (i - numDays) + 1);
-    futureDate.setHours(0, 0, 0, 0);
-    futureDate.toDateString();
+  // Generate fixed data for future days
+  const startFixedDate = new Date(today);
+  startFixedDate.setDate(today.getDate() + 1);
+
+  for (let i = 0; i < numDays - numRandomDays; i++) {
+    const futureDate = new Date(startFixedDate);
+    futureDate.setDate(startFixedDate.getDate() + i);
+
+    const fixedTasks = taskList.map(task => ({
+      id: task.id,
+      status: 'untouched'
+    }));
 
     calendarData.push({
-      date: futureDate,
+      date: futureDate.toISOString(),
       tasks: fixedTasks
     });
   }
 
-
-
   return {
     username,
-    calendarData
+    calendarData,
+    taskList
   };
 }
 
@@ -105,17 +103,16 @@ function getMockCalendar(username) {
  * @param {string} filename The name of the file to save (e.g., 'calender-data.json').
  */
 function saveMockCalendarToJson(username, filename) {
-    const calendar = getMockCalendar(username);
-    const jsonString = JSON.stringify(calendar, null, 2); // The '2' formats the JSON with 2-space indentation
+  const calendar = getMockCalendar(username);
+  const jsonString = JSON.stringify(calendar, null, 2);
 
-    fs.writeFile(filename, jsonString, (err) => {
-        if (err) {
-            console.error('Error writing file:', err);
-        } else {
-            console.log(`Successfully saved mock data to ${filename}`);
-        }
-    });
+  fs.writeFile(filename, jsonString, (err) => {
+    if (err) {
+      console.error('Error writing file:', err);
+    } else {
+      console.log(`Successfully saved mock data to ${filename}`);
+    }
+  });
 }
 
-// Call the function to generate and save the file
 saveMockCalendarToJson('joe', './calender-data.json');

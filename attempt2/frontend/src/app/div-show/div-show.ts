@@ -1,4 +1,4 @@
-
+// src/app/div-show/div-show.ts
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { NgStyle, CommonModule } from '@angular/common';
 import { DayStatus } from '../days-calender';
@@ -7,8 +7,8 @@ import { DayStatus } from '../days-calender';
   selector: 'div-show',
   imports: [CommonModule, NgStyle],
   template: `
-    <button [ngStyle]="currentStyles" (click)="onDayClick()" [title]="status">
-      
+    <button [ngStyle]="currentStyles" (click)="onButtonClick()" [title]="tooltipText">
+      <ng-content></ng-content>
     </button>
   `,
   styles: [`
@@ -22,15 +22,17 @@ import { DayStatus } from '../days-calender';
       cursor: pointer;
       border-radius: 8px; /* Optional: for a rounded square look */
     }
-  `]
+  `],
+  standalone: true
 })
 export class DivShow implements OnChanges {
-  @Input() status: DayStatus = 'untouched'; // Default status
+  @Input() status: DayStatus = 'untouched'; // Default status for day/task
+  @Input() tooltipText: string | undefined; // Optional tooltip text
   currentStyles: { [key: string]: string; } = {};
-  @Output() dayClick = new EventEmitter<void>();
+  @Output() buttonClick = new EventEmitter<void>(); // Renamed for clarity
 
-  onDayClick(): void {
-    this.dayClick.emit();
+  onButtonClick(): void {
+    this.buttonClick.emit();
   }
 
   // Lifecycle hook that runs when the input property changes
@@ -46,15 +48,5 @@ export class DivShow implements OnChanges {
       'lastLeft': '#4CB572'
     };
     this.currentStyles = { 'background-color': colorMap[this.status] };
-  }
-
-  getButtonText(): string {
-    const textMap = {
-      'complete': '✓',
-      'incomplete': '...',
-      'untouched': '○',
-      'lastLeft': '!'
-    };
-    return textMap[this.status];
   }
 }
