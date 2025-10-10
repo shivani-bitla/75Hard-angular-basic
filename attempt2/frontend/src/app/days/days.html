@@ -1,19 +1,16 @@
-<p>firstDate is {{firstDate| date}} </p>
-@if (calendar$ | async; as calendar) {
-  <div> 
-  <h2>{{ calendar.username }}'s Calendar</h2>
-  
-  <!-- The data is now available in the `calendar` template variable -->
-  @for ( day of calendar.calendarData; track day.date ) {
-    <div-show [status]=getDayStatus(day,completeStatus) (click)="onDayClick(day)"   ></div-show>    
-  }
-</div>
-
+<!-- src/app/days/days.html -->
+<p>days works!</p>
+@if (calendar()) {
+  <h2>{{ calendar()?.username   }}'s Calendar</h2>
+  <div  class="week-day">
+    @for (day of calendar()?.calendarData; track day.date) {
+      <div-show
+        [status]="getDayStatus(day)"
+        [tooltipText]="day?.date | date"
+      >
+      </div-show>
+    }
+  </div>
 } @else {
-  <!-- Optional: display a loading message while waiting for the data -->
   <p>Loading calendar data...</p>
 }
-
-
-<!--
--->

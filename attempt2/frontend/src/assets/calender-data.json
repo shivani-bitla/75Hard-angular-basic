@@ -2,7 +2,268 @@
   "username": "joe",
   "calendarData": [
     {
-      "date": "2025-08-22T18:30:00.000Z",
+      "date": "2025-08-09T18:30:00.000Z",
+      "tasks": [
+        {
+          "id": 1,
+          "status": "untouched"
+        },
+        {
+          "id": 2,
+          "status": "untouched"
+        },
+        {
+          "id": 3,
+          "status": "untouched"
+        },
+        {
+          "id": 4,
+          "status": "untouched"
+        },
+        {
+          "id": 5,
+          "status": "untouched"
+        },
+        {
+          "id": 6,
+          "status": "complete"
+        }
+      ]
+    },
+    {
+      "date": "2025-08-10T18:30:00.000Z",
+      "tasks": [
+        {
+          "id": 1,
+          "status": "complete"
+        },
+        {
+          "id": 2,
+          "status": "complete"
+        },
+        {
+          "id": 3,
+          "status": "complete"
+        },
+        {
+          "id": 4,
+          "status": "untouched"
+        },
+        {
+          "id": 5,
+          "status": "untouched"
+        },
+        {
+          "id": 6,
+          "status": "complete"
+        }
+      ]
+    },
+    {
+      "date": "2025-08-11T18:30:00.000Z",
+      "tasks": [
+        {
+          "id": 1,
+          "status": "complete"
+        },
+        {
+          "id": 2,
+          "status": "untouched"
+        },
+        {
+          "id": 3,
+          "status": "complete"
+        },
+        {
+          "id": 4,
+          "status": "untouched"
+        },
+        {
+          "id": 5,
+          "status": "complete"
+        },
+        {
+          "id": 6,
+          "status": "untouched"
+        }
+      ]
+    },
+    {
+      "date": "2025-08-12T18:30:00.000Z",
+      "tasks": [
+        {
+          "id": 1,
+          "status": "complete"
+        },
+        {
+          "id": 2,
+          "status": "complete"
+        },
+        {
+          "id": 3,
+          "status": "untouched"
+        },
+        {
+          "id": 4,
+          "status": "untouched"
+        },
+        {
+          "id": 5,
+          "status": "complete"
+        },
+        {
+          "id": 6,
+          "status": "untouched"
+        }
+      ]
+    },
+    {
+      "date": "2025-08-13T18:30:00.000Z",
+      "tasks": [
+        {
+          "id": 1,
+          "status": "complete"
+        },
+        {
+          "id": 2,
+          "status": "complete"
+        },
+        {
+          "id": 3,
+          "status": "untouched"
+        },
+        {
+          "id": 4,
+          "status": "untouched"
+        },
+        {
+          "id": 5,
+          "status": "untouched"
+        },
+        {
+          "id": 6,
+          "status": "complete"
+        }
+      ]
+    },
+    {
+      "date": "2025-08-14T18:30:00.000Z",
+      "tasks": [
+        {
+          "id": 1,
+          "status": "complete"
+        },
+        {
+          "id": 2,
+          "status": "untouched"
+        },
+        {
+          "id": 3,
+          "status": "complete"
+        },
+        {
+          "id": 4,
+          "status": "untouched"
+        },
+        {
+          "id": 5,
+          "status": "untouched"
+        },
+        {
+          "id": 6,
+          "status": "untouched"
+        }
+      ]
+    },
+    {
+      "date": "2025-08-15T18:30:00.000Z",
+      "tasks": [
+        {
+          "id": 1,
+          "status": "complete"
+        },
+        {
+          "id": 2,
+          "status": "complete"
+        },
+        {
+          "id": 3,
+          "status": "untouched"
+        },
+        {
+          "id": 4,
+          "status": "complete"
+        },
+        {
+          "id": 5,
+          "status": "complete"
+        },
+        {
+          "id": 6,
+          "status": "complete"
+        }
+      ]
+    },
+    {
+      "date": "2025-08-16T18:30:00.000Z",
+      "tasks": [
+        {
+          "id": 1,
+          "status": "complete"
+        },
+        {
+          "id": 2,
+          "status": "complete"
+        },
+        {
+          "id": 3,
+          "status": "untouched"
+        },
+        {
+          "id": 4,
+          "status": "untouched"
+        },
+        {
+          "id": 5,
+          "status": "complete"
+        },
+        {
+          "id": 6,
+          "status": "untouched"
+        }
+      ]
+    },
+    {
+      "date": "2025-08-17T18:30:00.000Z",
+      "tasks": [
+        {
+          "id": 1,
+          "status": "complete"
+        },
+        {
+          "id": 2,
+          "status": "untouched"
+        },
+        {
+          "id": 3,
+          "status": "complete"
+        },
+        {
+          "id": 4,
+          "status": "untouched"
+        },
+        {
+          "id": 5,
+          "status": "complete"
+        },
+        {
+          "id": 6,
+          "status": "complete"
+        }
+      ]
+    },
+    {
+      "date": "2025-08-18T18:30:00.000Z",
       "tasks": [
         {
           "id": 1,
@@ -19,6 +280,122 @@
         {
           "id": 4,
           "status": "untouched"
+        },
+        {
+          "id": 5,
+          "status": "complete"
+        },
+        {
+          "id": 6,
+          "status": "untouched"
+        }
+      ]
+    },
+    {
+      "date": "2025-08-19T18:30:00.000Z",
+      "tasks": [
+        {
+          "id": 1,
+          "status": "untouched"
+        },
+        {
+          "id": 2,
+          "status": "complete"
+        },
+        {
+          "id": 3,
+          "status": "complete"
+        },
+        {
+          "id": 4,
+          "status": "complete"
+        },
+        {
+          "id": 5,
+          "status": "complete"
+        },
+        {
+          "id": 6,
+          "status": "complete"
+        }
+      ]
+    },
+    {
+      "date": "2025-08-20T18:30:00.000Z",
+      "tasks": [
+        {
+          "id": 1,
+          "status": "complete"
+        },
+        {
+          "id": 2,
+          "status": "complete"
+        },
+        {
+          "id": 3,
+          "status": "complete"
+        },
+        {
+          "id": 4,
+          "status": "complete"
+        },
+        {
+          "id": 5,
+          "status": "untouched"
+        },
+        {
+          "id": 6,
+          "status": "complete"
+        }
+      ]
+    },
+    {
+      "date": "2025-08-21T18:30:00.000Z",
+      "tasks": [
+        {
+          "id": 1,
+          "status": "untouched"
+        },
+        {
+          "id": 2,
+          "status": "complete"
+        },
+        {
+          "id": 3,
+          "status": "complete"
+        },
+        {
+          "id": 4,
+          "status": "complete"
+        },
+        {
+          "id": 5,
+          "status": "untouched"
+        },
+        {
+          "id": 6,
+          "status": "complete"
+        }
+      ]
+    },
+    {
+      "date": "2025-08-22T18:30:00.000Z",
+      "tasks": [
+        {
+          "id": 1,
+          "status": "untouched"
+        },
+        {
+          "id": 2,
+          "status": "untouched"
+        },
+        {
+          "id": 3,
+          "status": "untouched"
+        },
+        {
+          "id": 4,
+          "status": "complete"
         },
         {
           "id": 5,
@@ -51,7 +428,7 @@
         },
         {
           "id": 5,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 6,
@@ -93,23 +470,23 @@
       "tasks": [
         {
           "id": 1,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 2,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 3,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 4,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 5,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 6,
@@ -130,7 +507,7 @@
         },
         {
           "id": 3,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 4,
@@ -151,7 +528,7 @@
       "tasks": [
         {
           "id": 1,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 2,
@@ -159,11 +536,11 @@
         },
         {
           "id": 3,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 4,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 5,
@@ -180,27 +557,27 @@
       "tasks": [
         {
           "id": 1,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 2,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 3,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 4,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 5,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 6,
-          "status": "untouched"
+          "status": "complete"
         }
       ]
     },
@@ -213,7 +590,7 @@
         },
         {
           "id": 2,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 3,
@@ -221,7 +598,7 @@
         },
         {
           "id": 4,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 5,
@@ -229,7 +606,7 @@
         },
         {
           "id": 6,
-          "status": "untouched"
+          "status": "complete"
         }
       ]
     },
@@ -238,11 +615,11 @@
       "tasks": [
         {
           "id": 1,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 2,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 3,
@@ -254,11 +631,11 @@
         },
         {
           "id": 5,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 6,
-          "status": "complete"
+          "status": "untouched"
         }
       ]
     },
@@ -271,7 +648,7 @@
         },
         {
           "id": 2,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 3,
@@ -279,7 +656,7 @@
         },
         {
           "id": 4,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 5,
@@ -287,7 +664,7 @@
         },
         {
           "id": 6,
-          "status": "untouched"
+          "status": "complete"
         }
       ]
     },
@@ -296,7 +673,7 @@
       "tasks": [
         {
           "id": 1,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 2,
@@ -308,15 +685,15 @@
         },
         {
           "id": 4,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 5,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 6,
-          "status": "untouched"
+          "status": "complete"
         }
       ]
     },
@@ -325,23 +702,23 @@
       "tasks": [
         {
           "id": 1,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 2,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 3,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 4,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 5,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 6,
@@ -354,27 +731,27 @@
       "tasks": [
         {
           "id": 1,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 2,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 3,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 4,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 5,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 6,
-          "status": "complete"
+          "status": "untouched"
         }
       ]
     },
@@ -383,7 +760,7 @@
       "tasks": [
         {
           "id": 1,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 2,
@@ -395,11 +772,11 @@
         },
         {
           "id": 4,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 5,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 6,
@@ -420,7 +797,7 @@
         },
         {
           "id": 3,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 4,
@@ -453,7 +830,7 @@
         },
         {
           "id": 4,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 5,
@@ -470,7 +847,7 @@
       "tasks": [
         {
           "id": 1,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 2,
@@ -490,7 +867,7 @@
         },
         {
           "id": 6,
-          "status": "complete"
+          "status": "untouched"
         }
       ]
     },
@@ -503,11 +880,11 @@
         },
         {
           "id": 2,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 3,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 4,
@@ -515,11 +892,11 @@
         },
         {
           "id": 5,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 6,
-          "status": "complete"
+          "status": "untouched"
         }
       ]
     },
@@ -532,11 +909,11 @@
         },
         {
           "id": 2,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 3,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 4,
@@ -548,7 +925,7 @@
         },
         {
           "id": 6,
-          "status": "untouched"
+          "status": "complete"
         }
       ]
     },
@@ -561,7 +938,7 @@
         },
         {
           "id": 2,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 3,
@@ -573,11 +950,11 @@
         },
         {
           "id": 5,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 6,
-          "status": "untouched"
+          "status": "complete"
         }
       ]
     },
@@ -586,11 +963,11 @@
       "tasks": [
         {
           "id": 1,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 2,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 3,
@@ -598,11 +975,11 @@
         },
         {
           "id": 4,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 5,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 6,
@@ -619,7 +996,7 @@
         },
         {
           "id": 2,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 3,
@@ -627,11 +1004,11 @@
         },
         {
           "id": 4,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 5,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 6,
@@ -648,11 +1025,11 @@
         },
         {
           "id": 2,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 3,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 4,
@@ -660,7 +1037,7 @@
         },
         {
           "id": 5,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 6,
@@ -673,11 +1050,11 @@
       "tasks": [
         {
           "id": 1,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 2,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 3,
@@ -693,7 +1070,7 @@
         },
         {
           "id": 6,
-          "status": "complete"
+          "status": "untouched"
         }
       ]
     },
@@ -706,15 +1083,15 @@
         },
         {
           "id": 2,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 3,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 4,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 5,
@@ -722,7 +1099,7 @@
         },
         {
           "id": 6,
-          "status": "untouched"
+          "status": "complete"
         }
       ]
     },
@@ -731,7 +1108,7 @@
       "tasks": [
         {
           "id": 1,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 2,
@@ -739,11 +1116,11 @@
         },
         {
           "id": 3,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 4,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 5,
@@ -751,7 +1128,7 @@
         },
         {
           "id": 6,
-          "status": "complete"
+          "status": "untouched"
         }
       ]
     },
@@ -760,7 +1137,7 @@
       "tasks": [
         {
           "id": 1,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 2,
@@ -780,7 +1157,7 @@
         },
         {
           "id": 6,
-          "status": "untouched"
+          "status": "complete"
         }
       ]
     },
@@ -797,7 +1174,7 @@
         },
         {
           "id": 3,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 4,
@@ -809,7 +1186,7 @@
         },
         {
           "id": 6,
-          "status": "complete"
+          "status": "untouched"
         }
       ]
     },
@@ -822,11 +1199,11 @@
         },
         {
           "id": 2,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 3,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 4,
@@ -834,11 +1211,11 @@
         },
         {
           "id": 5,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 6,
-          "status": "complete"
+          "status": "untouched"
         }
       ]
     },
@@ -851,7 +1228,7 @@
         },
         {
           "id": 2,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 3,
@@ -859,11 +1236,11 @@
         },
         {
           "id": 4,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 5,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 6,
@@ -880,7 +1257,7 @@
         },
         {
           "id": 2,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 3,
@@ -892,11 +1269,11 @@
         },
         {
           "id": 5,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 6,
-          "status": "untouched"
+          "status": "complete"
         }
       ]
     },
@@ -905,23 +1282,23 @@
       "tasks": [
         {
           "id": 1,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 2,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 3,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 4,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 5,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 6,
@@ -938,19 +1315,19 @@
         },
         {
           "id": 2,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 3,
-          "status": "untouched"
-        },
-        {
-          "id": 4,
           "status": "complete"
         },
         {
-          "id": 5,
+          "id": 4,
           "status": "untouched"
+        },
+        {
+          "id": 5,
+          "status": "complete"
         },
         {
           "id": 6,
@@ -963,7 +1340,7 @@
       "tasks": [
         {
           "id": 1,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 2,
@@ -971,7 +1348,7 @@
         },
         {
           "id": 3,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 4,
@@ -979,11 +1356,11 @@
         },
         {
           "id": 5,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 6,
-          "status": "untouched"
+          "status": "complete"
         }
       ]
     },
@@ -992,7 +1369,7 @@
       "tasks": [
         {
           "id": 1,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 2,
@@ -1008,7 +1385,7 @@
         },
         {
           "id": 5,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 6,
@@ -1021,15 +1398,15 @@
       "tasks": [
         {
           "id": 1,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 2,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 3,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 4,
@@ -1054,7 +1431,7 @@
         },
         {
           "id": 2,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 3,
@@ -1066,7 +1443,7 @@
         },
         {
           "id": 5,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 6,
@@ -1083,11 +1460,11 @@
         },
         {
           "id": 2,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 3,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 4,
@@ -1099,7 +1476,7 @@
         },
         {
           "id": 6,
-          "status": "untouched"
+          "status": "complete"
         }
       ]
     },
@@ -1124,11 +1501,11 @@
         },
         {
           "id": 5,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 6,
-          "status": "complete"
+          "status": "untouched"
         }
       ]
     },
@@ -1145,15 +1522,15 @@
         },
         {
           "id": 3,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 4,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 5,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 6,
@@ -1174,11 +1551,11 @@
         },
         {
           "id": 3,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 4,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 5,
@@ -1195,27 +1572,27 @@
       "tasks": [
         {
           "id": 1,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 2,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 3,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 4,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 5,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 6,
-          "status": "untouched"
+          "status": "complete"
         }
       ]
     },
@@ -1232,11 +1609,11 @@
         },
         {
           "id": 3,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 4,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 5,
@@ -1257,7 +1634,7 @@
         },
         {
           "id": 2,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 3,
@@ -1265,15 +1642,15 @@
         },
         {
           "id": 4,
-          "status": "untouched"
-        },
-        {
-          "id": 5,
           "status": "complete"
         },
         {
-          "id": 6,
+          "id": 5,
           "status": "untouched"
+        },
+        {
+          "id": 6,
+          "status": "complete"
         }
       ]
     },
@@ -1294,7 +1671,7 @@
         },
         {
           "id": 4,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 5,
@@ -1311,19 +1688,19 @@
       "tasks": [
         {
           "id": 1,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 2,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 3,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 4,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 5,
@@ -1340,19 +1717,19 @@
       "tasks": [
         {
           "id": 1,
-          "status": "complete"
-        },
-        {
-          "id": 2,
           "status": "untouched"
         },
         {
-          "id": 3,
+          "id": 2,
           "status": "complete"
         },
         {
+          "id": 3,
+          "status": "untouched"
+        },
+        {
           "id": 4,
-          "status": "complete"
+          "status": "untouched"
         },
         {
           "id": 5,
@@ -1360,7 +1737,7 @@
         },
         {
           "id": 6,
-          "status": "untouched"
+          "status": "complete"
         }
       ]
     },
@@ -1373,6 +1750,35 @@
         },
         {
           "id": 2,
+          "status": "untouched"
+        },
+        {
+          "id": 3,
+          "status": "untouched"
+        },
+        {
+          "id": 4,
+          "status": "complete"
+        },
+        {
+          "id": 5,
+          "status": "complete"
+        },
+        {
+          "id": 6,
+          "status": "untouched"
+        }
+      ]
+    },
+    {
+      "date": "2025-10-09T18:30:00.000Z",
+      "tasks": [
+        {
+          "id": 1,
+          "status": "untouched"
+        },
+        {
+          "id": 2,
           "status": "complete"
         },
         {
@@ -1385,11 +1791,11 @@
         },
         {
           "id": 5,
-          "status": "untouched"
+          "status": "complete"
         },
         {
           "id": 6,
-          "status": "complete"
+          "status": "untouched"
         }
       ]
     },
@@ -2178,412 +2584,6 @@
     },
     {
       "date": "2025-11-06T18:30:00.000Z",
-      "tasks": [
-        {
-          "id": 1,
-          "status": "untouched"
-        },
-        {
-          "id": 2,
-          "status": "untouched"
-        },
-        {
-          "id": 3,
-          "status": "untouched"
-        },
-        {
-          "id": 4,
-          "status": "untouched"
-        },
-        {
-          "id": 5,
-          "status": "untouched"
-        },
-        {
-          "id": 6,
-          "status": "untouched"
-        }
-      ]
-    },
-    {
-      "date": "2025-11-07T18:30:00.000Z",
-      "tasks": [
-        {
-          "id": 1,
-          "status": "untouched"
-        },
-        {
-          "id": 2,
-          "status": "untouched"
-        },
-        {
-          "id": 3,
-          "status": "untouched"
-        },
-        {
-          "id": 4,
-          "status": "untouched"
-        },
-        {
-          "id": 5,
-          "status": "untouched"
-        },
-        {
-          "id": 6,
-          "status": "untouched"
-        }
-      ]
-    },
-    {
-      "date": "2025-11-08T18:30:00.000Z",
-      "tasks": [
-        {
-          "id": 1,
-          "status": "untouched"
-        },
-        {
-          "id": 2,
-          "status": "untouched"
-        },
-        {
-          "id": 3,
-          "status": "untouched"
-        },
-        {
-          "id": 4,
-          "status": "untouched"
-        },
-        {
-          "id": 5,
-          "status": "untouched"
-        },
-        {
-          "id": 6,
-          "status": "untouched"
-        }
-      ]
-    },
-    {
-      "date": "2025-11-09T18:30:00.000Z",
-      "tasks": [
-        {
-          "id": 1,
-          "status": "untouched"
-        },
-        {
-          "id": 2,
-          "status": "untouched"
-        },
-        {
-          "id": 3,
-          "status": "untouched"
-        },
-        {
-          "id": 4,
-          "status": "untouched"
-        },
-        {
-          "id": 5,
-          "status": "untouched"
-        },
-        {
-          "id": 6,
-          "status": "untouched"
-        }
-      ]
-    },
-    {
-      "date": "2025-11-10T18:30:00.000Z",
-      "tasks": [
-        {
-          "id": 1,
-          "status": "untouched"
-        },
-        {
-          "id": 2,
-          "status": "untouched"
-        },
-        {
-          "id": 3,
-          "status": "untouched"
-        },
-        {
-          "id": 4,
-          "status": "untouched"
-        },
-        {
-          "id": 5,
-          "status": "untouched"
-        },
-        {
-          "id": 6,
-          "status": "untouched"
-        }
-      ]
-    },
-    {
-      "date": "2025-11-11T18:30:00.000Z",
-      "tasks": [
-        {
-          "id": 1,
-          "status": "untouched"
-        },
-        {
-          "id": 2,
-          "status": "untouched"
-        },
-        {
-          "id": 3,
-          "status": "untouched"
-        },
-        {
-          "id": 4,
-          "status": "untouched"
-        },
-        {
-          "id": 5,
-          "status": "untouched"
-        },
-        {
-          "id": 6,
-          "status": "untouched"
-        }
-      ]
-    },
-    {
-      "date": "2025-11-12T18:30:00.000Z",
-      "tasks": [
-        {
-          "id": 1,
-          "status": "untouched"
-        },
-        {
-          "id": 2,
-          "status": "untouched"
-        },
-        {
-          "id": 3,
-          "status": "untouched"
-        },
-        {
-          "id": 4,
-          "status": "untouched"
-        },
-        {
-          "id": 5,
-          "status": "untouched"
-        },
-        {
-          "id": 6,
-          "status": "untouched"
-        }
-      ]
-    },
-    {
-      "date": "2025-11-13T18:30:00.000Z",
-      "tasks": [
-        {
-          "id": 1,
-          "status": "untouched"
-        },
-        {
-          "id": 2,
-          "status": "untouched"
-        },
-        {
-          "id": 3,
-          "status": "untouched"
-        },
-        {
-          "id": 4,
-          "status": "untouched"
-        },
-        {
-          "id": 5,
-          "status": "untouched"
-        },
-        {
-          "id": 6,
-          "status": "untouched"
-        }
-      ]
-    },
-    {
-      "date": "2025-11-14T18:30:00.000Z",
-      "tasks": [
-        {
-          "id": 1,
-          "status": "untouched"
-        },
-        {
-          "id": 2,
-          "status": "untouched"
-        },
-        {
-          "id": 3,
-          "status": "untouched"
-        },
-        {
-          "id": 4,
-          "status": "untouched"
-        },
-        {
-          "id": 5,
-          "status": "untouched"
-        },
-        {
-          "id": 6,
-          "status": "untouched"
-        }
-      ]
-    },
-    {
-      "date": "2025-11-15T18:30:00.000Z",
-      "tasks": [
-        {
-          "id": 1,
-          "status": "untouched"
-        },
-        {
-          "id": 2,
-          "status": "untouched"
-        },
-        {
-          "id": 3,
-          "status": "untouched"
-        },
-        {
-          "id": 4,
-          "status": "untouched"
-        },
-        {
-          "id": 5,
-          "status": "untouched"
-        },
-        {
-          "id": 6,
-          "status": "untouched"
-        }
-      ]
-    },
-    {
-      "date": "2025-11-16T18:30:00.000Z",
-      "tasks": [
-        {
-          "id": 1,
-          "status": "untouched"
-        },
-        {
-          "id": 2,
-          "status": "untouched"
-        },
-        {
-          "id": 3,
-          "status": "untouched"
-        },
-        {
-          "id": 4,
-          "status": "untouched"
-        },
-        {
-          "id": 5,
-          "status": "untouched"
-        },
-        {
-          "id": 6,
-          "status": "untouched"
-        }
-      ]
-    },
-    {
-      "date": "2025-11-17T18:30:00.000Z",
-      "tasks": [
-        {
-          "id": 1,
-          "status": "untouched"
-        },
-        {
-          "id": 2,
-          "status": "untouched"
-        },
-        {
-          "id": 3,
-          "status": "untouched"
-        },
-        {
-          "id": 4,
-          "status": "untouched"
-        },
-        {
-          "id": 5,
-          "status": "untouched"
-        },
-        {
-          "id": 6,
-          "status": "untouched"
-        }
-      ]
-    },
-    {
-      "date": "2025-11-18T18:30:00.000Z",
-      "tasks": [
-        {
-          "id": 1,
-          "status": "untouched"
-        },
-        {
-          "id": 2,
-          "status": "untouched"
-        },
-        {
-          "id": 3,
-          "status": "untouched"
-        },
-        {
-          "id": 4,
-          "status": "untouched"
-        },
-        {
-          "id": 5,
-          "status": "untouched"
-        },
-        {
-          "id": 6,
-          "status": "untouched"
-        }
-      ]
-    },
-    {
-      "date": "2025-11-19T18:30:00.000Z",
-      "tasks": [
-        {
-          "id": 1,
-          "status": "untouched"
-        },
-        {
-          "id": 2,
-          "status": "untouched"
-        },
-        {
-          "id": 3,
-          "status": "untouched"
-        },
-        {
-          "id": 4,
-          "status": "untouched"
-        },
-        {
-          "id": 5,
-          "status": "untouched"
-        },
-        {
-          "id": 6,
-          "status": "untouched"
-        }
-      ]
-    },
-    {
-      "date": "2025-11-20T18:30:00.000Z",
       "tasks": [
         {
           "id": 1,

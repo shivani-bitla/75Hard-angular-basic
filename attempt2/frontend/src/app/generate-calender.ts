@@ -1,81 +1,91 @@
-import { Injectable, inject } from '@angular/core';
+// src/app/generate-calender/generate-calender.service.ts
+import { Injectable, inject, signal, WritableSignal, effect } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject, Observable, throwError,filter } from 'rxjs';
-import { tap, catchError, map } from 'rxjs/operators';
-import { DaysCalender,Task } from './days-calender';
+import { Observable, throwError, fromEvent } from 'rxjs';
+import { catchError, map, tap } from 'rxjs/operators';
+import { DaysCalender, Task } from './days-calender';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class GenerateCalenderService {
   private http = inject(HttpClient);
   private calendarDataUrl = 'assets/calender-data.json';
-  
-  // Use a BehaviorSubject to store and emit the data
-  private calendarDataSubject = new BehaviorSubject<DaysCalender | null>(null);
-  public calendarData$: Observable<DaysCalender> = this.calendarDataSubject.asObservable().pipe(
-      filter((data): data is DaysCalender => data !== null),
-      map(calendar => ({
-        ...calendar,
-        calendarData: calendar.calendarData.map(day => ({
-          ...day,
-          date: new Date(day.date),
-        })),
-      }))
-    );
+  private storageKey = 'calendarState';
+
+  // WritableSignal to hold the calendar data
+  public calendarState: WritableSignal<DaysCalender | null> = signal(null);
 
   constructor() {
-    this.fetchCalendarData(); // Fetch data when the service is created
+    this.loadStateFromStorage();
+    this.setupBeforeUnloadSave();
+
+    // Effect to automatically save state to localStorage whenever it changes
+    effect(() => {
+      const state = this.calendarState();
+      if (state) {
+        this.saveStateToStorage(state);
+        console.log('Signal state saved to localStorage.');
+      }
+    });
   }
 
-  // Method to fetch data from the server and update the subject
+  private loadStateFromStorage(): void {
+    const savedState = localStorage.getItem(this.storageKey);
+    if (savedState) {
+      const calendar = JSON.parse(savedState);
+      // Update the signal directly with the loaded state
+      this.calendarState.set(calendar);
+    } else {
+      this.fetchCalendarData();
+    }
+  }
+
   private fetchCalendarData(): void {
     this.http.get<DaysCalender>(this.calendarDataUrl).pipe(
       map(calendar => ({
         ...calendar,
-        calendarData: calendar.calendarData.map(day => ({
-          ...day,
-          date: new Date(day.date),
-        })),
+        calendarData: calendar.calendarData.map(day => ({ ...day, date: new Date(day.date) })),
       })),
-      tap(data => this.calendarDataSubject.next(data)),
       catchError(error => {
-        this.calendarDataSubject.error(error);
+        console.error('Error loading calendar data:', error);
         return throwError(() => new Error('Error loading calendar data'));
       })
-    ).subscribe();
+    ).subscribe(data => this.calendarState.set(data));
   }
 
-  // Fetch the data and store it in the BehaviorSubject
-  getCalendarData(): Observable<DaysCalender> {
-    if (this.calendarDataSubject.value) {
-      return this.calendarDataSubject.asObservable().pipe(filter((data): data is DaysCalender => data !== null) // Filter out null values
-    );
-    } else {
-      return this.http.get<DaysCalender>(this.calendarDataUrl).pipe(
-        tap(data => this.calendarDataSubject.next(data)),
-        catchError(error => {
-          this.calendarDataSubject.error(error);
-          return throwError(() => new Error('Error loading calendar data'));
-        })
-      );
-    }
+  private setupBeforeUnloadSave(): void {
+    fromEvent(window, 'beforeunload').subscribe(() => {
+      const state = this.calendarState();
+      if (state) {
+        this.saveStateToStorage(state);
+      }
+    });
   }
 
+  private saveStateToStorage(state: DaysCalender): void {
+    localStorage.setItem(this.storageKey, JSON.stringify(state));
+  }
+  
   updateTaskStatus(dayDate: Date, taskId: number, newStatus: Task['status']): void {
-    const currentCalendar = this.calendarDataSubject.value;
-    if (currentCalendar) {
-      const dayToUpdate = currentCalendar.calendarData.find(
+    this.calendarState.update(currentCalendar => {
+      if (!currentCalendar) return null;
+
+      const dayIndex = currentCalendar.calendarData.findIndex(
         day => day.date.toISOString().split('T') === dayDate.toISOString().split('T')
       );
-      if (dayToUpdate) {
-        const taskToUpdate = dayToUpdate.tasks.find(task => task.id === taskId);
-        if (taskToUpdate) {
-          taskToUpdate.status = newStatus;
-          this.calendarDataSubject.next(currentCalendar); // Emit the updated data
-        }
+      
+      if (dayIndex !== -1) {
+        const updatedCalendarData = currentCalendar.calendarData.map((day, index) => {
+          if (index === dayIndex) {
+            const updatedTasks = day.tasks.map(task =>
+              task.id === taskId ? { ...task, status: newStatus } : task
+            );
+            return { ...day, tasks: updatedTasks };
+          }
+          return day;
+        });
+        return { ...currentCalendar, calendarData: updatedCalendarData };
       }
-    }
+      return currentCalendar;
+    });
   }
-
 }

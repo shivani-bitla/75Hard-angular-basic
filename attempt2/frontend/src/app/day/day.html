@@ -6,7 +6,7 @@
       @for (task of dayWithTaskNames.tasks; track task.id) {
         <div-show
         [status]="task.status"
-        (buttonClick)="onButtonClick({ id: task.id, status: 'untouched' })"
+        (buttonClick)="onButtonClick(task)"
         [tooltipText]="task.name"
         class="task-button"
         >

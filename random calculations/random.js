@@ -46,19 +46,23 @@ function getMockCalendar(username) {
     order: index + 1
   }));
 
-  const existingDates = new Set();
   const numRandomDays = getRandomInt(3, 70);
   const startDate = new Date();
   startDate.setDate(today.getDate() - numRandomDays);
   startDate.setHours(0, 0, 0, 0);
+  let randomStatus='untouched';
+  console.log('Generating data starting from:', startDate.toISOString());
 
   // Generate random data for past and current days
-  for (let i = 0; i < numRandomDays; i++) {
+  for (let i = 0; i < numDays; i++) {
     const randomDate = new Date(startDate);
     randomDate.setDate(startDate.getDate() + i);
+    randomDate.setHours(0, 0, 0, 0);
 
     const tasks = taskList.map(task => {
-      const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+      if (randomDate < today) {
+        randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+      }
       return {
         id: task.id,
         status: randomStatus
@@ -71,24 +75,23 @@ function getMockCalendar(username) {
     });
   }
 
-  // Generate fixed data for future days
-  const startFixedDate = new Date(today);
-  startFixedDate.setDate(today.getDate() + 1);
+  // // Generate fixed data for future days
+  // const startFixedDate = new Date(today);
 
-  for (let i = 0; i < numDays - numRandomDays; i++) {
-    const futureDate = new Date(startFixedDate);
-    futureDate.setDate(startFixedDate.getDate() + i);
+  // for (let i = 0; i < numDays - numRandomDays; i++) {
+  //   const futureDate = new Date(startFixedDate);
+  //   futureDate.setDate(startFixedDate.getDate() + i);
 
-    const fixedTasks = taskList.map(task => ({
-      id: task.id,
-      status: 'untouched'
-    }));
+  //   const fixedTasks = taskList.map(task => ({
+  //     id: task.id,
+  //     status: 'untouched'
+  //   }));
 
-    calendarData.push({
-      date: futureDate.toISOString(),
-      tasks: fixedTasks
-    });
-  }
+  //   calendarData.push({
+  //     date: futureDate.toISOString(),
+  //     tasks: fixedTasks
+  //   });
+  // }
 
   return {
     username,

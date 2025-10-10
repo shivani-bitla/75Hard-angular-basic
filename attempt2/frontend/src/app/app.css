@@ -11,3 +11,13 @@ div{
     height : 100px;
     width:200px
 }
+a{
+    width: 80dvw;
+    height: 30px;
+    padding:10px;
+    background-color: rgb(186, 248, 248);
+    margin :5px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: black;
+}
