@@ -1,6 +1,7 @@
-import { Injectable,inject } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, throwError,filter } from 'rxjs';
+import { tap, catchError } from 'rxjs/operators';
 import { DaysCalender } from './days-calender';
 
 @Injectable({
@@ -9,20 +10,26 @@ import { DaysCalender } from './days-calender';
 export class GenerateCalenderService {
   private http = inject(HttpClient);
   private calendarDataUrl = 'assets/calender-data.json';
+  
+  // Use a BehaviorSubject to store and emit the data
+  private calendarDataSubject = new BehaviorSubject<DaysCalender | null>(null);
+  calendarData$ = this.calendarDataSubject.asObservable();
 
-  constructor() { }
+  constructor() {}
 
-  /**
-   * Fetches the calendar data from a JSON file.
-   * @returns An Observable of DaysCalender.
-   */
+  // Fetch the data and store it in the BehaviorSubject
   getCalendarData(): Observable<DaysCalender> {
-    return this.http.get<DaysCalender>(this.calendarDataUrl).pipe(
-    catchError(error => {
-      console.error('Error fetching calendar data:', error);
-      // Return a "safe" empty object to avoid breaking the async pipe
-      return of({ username: '', calendarData: [] });
-    })
-  );
+    if (this.calendarDataSubject.value) {
+      return this.calendarDataSubject.asObservable().pipe(filter((data): data is DaysCalender => data !== null) // Filter out null values
+    );
+    } else {
+      return this.http.get<DaysCalender>(this.calendarDataUrl).pipe(
+        tap(data => this.calendarDataSubject.next(data)),
+        catchError(error => {
+          this.calendarDataSubject.error(error);
+          return throwError(() => new Error('Error loading calendar data'));
+        })
+      );
+    }
   }
 }

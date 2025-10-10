@@ -1,0 +1,12 @@
+.task-button{
+    width: 80dvw;
+    height: 40px;
+    border-radius: 8px;
+    margin:5px;
+    padding: 10px;
+    background-color: #f6ffb3c0;
+}
+.task-complete{
+    text-decoration: line-through;
+    color: rgb(184, 248, 179);
+}

@@ -7,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrl: './not-found.css'
 })
 export class NotFound {
-
+  constructor() {
+    console.log("NotFound component loaded");
+  }
 }

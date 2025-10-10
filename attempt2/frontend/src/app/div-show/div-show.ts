@@ -1,5 +1,5 @@
 
-import { Component, Input, OnChanges } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { NgStyle, CommonModule } from '@angular/common';
 import { DayStatus } from '../days-calender';
 
@@ -7,7 +7,7 @@ import { DayStatus } from '../days-calender';
   selector: 'div-show',
   imports: [CommonModule, NgStyle],
   template: `
-    <button [ngStyle]="currentStyles">
+    <button [ngStyle]="currentStyles" (click)="onDayClick()" [title]="status">
       
     </button>
   `,
@@ -27,6 +27,11 @@ import { DayStatus } from '../days-calender';
 export class DivShow implements OnChanges {
   @Input() status: DayStatus = 'untouched'; // Default status
   currentStyles: { [key: string]: string; } = {};
+  @Output() dayClick = new EventEmitter<void>();
+
+  onDayClick(): void {
+    this.dayClick.emit();
+  }
 
   // Lifecycle hook that runs when the input property changes
   ngOnChanges(): void {

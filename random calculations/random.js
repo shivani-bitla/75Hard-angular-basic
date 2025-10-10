@@ -45,16 +45,17 @@ function getMockCalendar(username) {
       randomTime = startDate.getTime() + Math.random() * (today.getTime() - startDate.getTime());
       randomDate = new Date(randomTime);
       randomDate.setHours(0, 0, 0, 0);
+      randomDate.toDateString();
     } while (existingDates.has(randomDate.getTime()));
 
     existingDates.add(randomDate.getTime());
 
-    const numTasks = getRandomInt(0, 6);
+    const numTasks = 6;
     const tasks = [];
 
     for (let j = 1; j <= numTasks; j++) {
       // const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
-      const randomStatus = Math.random() < 0.5 ? 'complete' : 'untouched';
+      const randomStatus = Math.random() < 0.7 ? 'complete' : 'untouched';
       tasks.push({
         id: j,
         task: `Generated task ${j}`,
@@ -67,8 +68,30 @@ function getMockCalendar(username) {
       tasks: tasks
     });
   }
+  let fixedTasks = [];
+  const numTasks = 6;
+  for (let j = 1; j <= numTasks; j++) {
+      fixedTasks.push({
+        id: j,
+        task: `Generated task ${j}`,
+        status: 'untouched'
+      });
+    }
 
   calendarData.sort((a, b) => a.date.getTime() - b.date.getTime());
+  for (let i=numDays;i<90;i++) {
+    const futureDate = new Date();
+    futureDate.setDate(today.getDate() + (i - numDays) + 1);
+    futureDate.setHours(0, 0, 0, 0);
+    futureDate.toDateString();
+
+    calendarData.push({
+      date: futureDate,
+      tasks: fixedTasks
+    });
+  }
+
+
 
   return {
     username,

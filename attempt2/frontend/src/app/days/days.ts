@@ -1,29 +1,50 @@
+// src/app/days/days.component.ts
 import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
 import { DivShow } from '../div-show/div-show';
 import { DaysCalender, DayData, DayStatus } from '../days-calender';
-import { DatePipe, AsyncPipe } from '@angular/common';
+import { DatePipe, AsyncPipe, CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
+import { filter, first, map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 import { GenerateCalenderService } from '../generate-calender';
 
 @Component({
   selector: 'app-days',
-  imports: [DivShow, DatePipe, AsyncPipe], // Add AsyncPipe to imports
+  imports: [DivShow, DatePipe, AsyncPipe, CommonModule],
   templateUrl: './days.html',
   styleUrl: './days.css',
   standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush // Implement OnPush strategy
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Days implements OnInit {
-  calendar$!: Observable<DaysCalender>; // Use Observable convention
+  calendar$!: Observable<DaysCalender | null>;
+  firstDate$!: Observable<Date | null>; // Declare a new observable for the first date
   completeStatus = 'complete';
+  firstDate: Date | null = null;
+  
 
+  constructor() {
+    console.log('Days component initialized'); // Debug log  
+  }
+  
   private calenderService = inject(GenerateCalenderService);
-
-  constructor() {}
-
+  private router = inject(Router);
+  
   ngOnInit(): void {
-    // Fetch data and assign the observable to the class property
-    this.calendar$ = this.calenderService.getCalendarData();
+    // Subscribe to the shared service's observable
+    this.calenderService.getCalendarData().subscribe();
+    this.calendar$ = this.calenderService.calendarData$;
+
+    
+    this.firstDate$ = this.calendar$.pipe(
+      filter(calendar => calendar !== null && calendar.calendarData.length > 0),
+      map(calendar => calendar!.calendarData[0].date)
+    );console.log('First date observable set up'); // Debug log
+    console.log(this.firstDate$); // Debug log  
+    this.firstDate$.pipe(first()).subscribe(date => {
+      this.firstDate = date;
+      console.log('First date:', this.firstDate); // Debug log
+    });
   }
 
   getDayStatus(day: DayData, status: string): DayStatus {
@@ -39,8 +60,9 @@ export class Days implements OnInit {
         return 'incomplete';
     }
   }
+
   onDayClick(day: DayData): void {
-    console.log('Day clicked:', day);
-    
+    const [dayDate] = new Date(day.date).toISOString().split('T');
+    this.router.navigate(['/day', dayDate]);
   }
 }

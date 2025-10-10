@@ -1,1 +1,21 @@
-<p>day works!</p>
+<!-- src/app/day/day.html -->
+<div class="day-details">
+  @if (dayData) {
+    <h2>Tasks for {{ dayData.date | date }}</h2>
+    <div class="task-list">
+      <h3>Static Tasks</h3>
+      
+        @for (task of constantTasks; track task.id) {
+          <button class="task-button"  (click)="onButtonClick(task)">{{ task.task }}</button>
+        }
+      
+      <h3 class="dynamic-tasks">Dynamic Tasks</h3>
+      @for (task of dayData.tasks; track task.id) {
+        <p><strong>Task {{ task.id }}:</strong> {{ task.task }} - Status: {{ task.status }}</p>
+      }
+    </div>
+  } @else {
+    <p>No details found for this day.</p>
+    <button (click)="newDataClick()">Create New Data</button>
+  }
+</div>

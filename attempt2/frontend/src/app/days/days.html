@@ -1,25 +1,11 @@
-<p>days works!</p>
-
-<div-show status="complete"></div-show>
-<div-show status="incomplete"></div-show>
-<div-show status="untouched"></div-show>
-<div-show status="lastLeft"></div-show>
-
-<!-- Use *ngIf with the async pipe to prevent rendering until data is available -->
-
+<p>firstDate is {{firstDate| date}} </p>
 @if (calendar$ | async; as calendar) {
   <div> 
   <h2>{{ calendar.username }}'s Calendar</h2>
   
   <!-- The data is now available in the `calendar` template variable -->
   @for ( day of calendar.calendarData; track day.date ) {
-    <div-show [status]=getDayStatus(day,completeStatus) onclick="onDayClick(day)">
-      <p>{{day.date | date}}</p>
-    </div-show>
-    @for ( task of day.tasks; track task.id ) {
-      <!-- <span> {{task.id}} : {{task.task}} = {{task.status}} </span>
-      <br> -->
-    }
+    <div-show [status]=getDayStatus(day,completeStatus) (click)="onDayClick(day)"   [title]="day.date|date"></div-show>    
   }
 </div>
 
