@@ -1,4 +1,17 @@
 .week-day{
     display: grid;
-    grid-template-columns: min-content   min-content    min-content    min-content    min-content    min-content    min-content;
+    grid-template-columns: repeat(7, 1fr);
+    min-width: 344px;
+    height: 20dvw;
+    width: 20dvw;
+    
+
+    /* grid-template-columns: min-content   min-content    min-content    min-content    min-content    min-content    min-content; */
+}
+
+div-show{
+    place-self:center;
+    margin: 3px;
+    width:10vdw;
+    height :10vdw;
 }

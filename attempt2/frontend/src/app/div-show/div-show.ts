@@ -1,7 +1,7 @@
 // src/app/div-show/div-show.ts
 import { Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 import { NgStyle, CommonModule } from '@angular/common';
-import { DayStatus  } from '../days-calender';
+import { DayData, DayStatus  } from '../days-calender';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -10,21 +10,18 @@ import { RouterLink } from '@angular/router';
   template: `
     <button [ngStyle]="currentStyles"  (click)="onButtonClick()" [title]="tooltipText"  
       [attr.aria-label]="tooltipText" >
-      <a [routerLink]="['/day', (tooltipText | date:'yyyy-MM-dd')]" (click)="$event.stopPropagation()" style="text-decoration: none; color: inherit; display: block; width: 100%; height: 100%;">
+      <a [routerLink]="['/day/', (dateFormated)]" (click)="$event.stopPropagation()" style="text-decoration: none; color: inherit; display: block; width: 100%; height: 100%;">
         <ng-content></ng-content>
       </a>  
-      <ng-content></ng-content>
     </button>
   `,
   styles: [`
     button {
-      height: 50px;      /* Set a fixed height to make it square */
+      height: 40px;      /* Set a fixed height to make it square */
       border: none;
-      font-weight: bold;
-      margin: 5px;
       padding: 0;
       cursor: pointer;
-      min-width:50px;
+      min-width:40px;
       max-width:300px;       /* Set a fixed width to make it square */
       border-radius: 8px; /* Optional: for a rounded square look */
     }
@@ -35,7 +32,12 @@ export class DivShow implements OnChanges {
   @Input() status: DayStatus = 'untouched'; // Default status for day/task
   @Input() tooltipText: string | undefined  | null; // Optional tooltip text
   currentStyles: { [key: string]: string; } = {};
+  @Input() dateUnformat: DayData | undefined | null; // Date format for router link
   @Output() buttonClick = new EventEmitter<void>(); // Renamed for clarity
+  @Input() dateFormated: string | undefined | null;
+  
+  constructor() {
+  }
 
   onButtonClick(): void {
     this.buttonClick.emit();

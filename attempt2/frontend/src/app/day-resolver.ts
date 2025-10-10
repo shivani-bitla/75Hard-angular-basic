@@ -4,25 +4,35 @@ import { inject } from '@angular/core';
 import { GenerateCalenderService } from './generate-calender'; // Assuming correct path
 import { DayData, DaysCalender, Task } from './days-calender';
 import { toObservable } from '@angular/core/rxjs-interop';
-import { map, filter, take } from 'rxjs/operators';
+import { map, filter, take, first } from 'rxjs/operators';
 
 export type DayWithTaskNames = DayData & { tasks: (Task & { name?: string })[] };
 
 export const dayResolver: ResolveFn<DayWithTaskNames | undefined> = (route, state) => {
   const calenderService = inject(GenerateCalenderService);
   const dateString = route.paramMap.get('date');
+  console.log('Resolver called for date:', dateString);
+  const dayStringDate = new Date( Date.parse(dateString || ''));
+  console.log('Parsed date:', (dayStringDate));
+    dayStringDate.setHours(0, 0, 0, 0);
+  console.log('Parsed date:', (dayStringDate.toISOString()));
+
 
   return toObservable(calenderService.calendarState).pipe(
     filter(calendar => calendar !== null), // Wait for the signal to have a value
-    take(1), // Complete the observable after the first emission
+    first(),
     map((calendar: DaysCalender) => {
+      
       if (!calendar || !dateString) {
         return undefined;
       }
+      console.log('Calendar data:', calendar);
+      
 
-      const dayData = calendar.calendarData.find(d => {
-        const [dayDate] = d.date.toISOString().split('T');
-        return dayDate === dateString;
+      const dayData = calendar.calendarData.find(d => {     
+        console.log(d.date===dayStringDate, d.date, dayStringDate);
+         
+        return  d.date.toISOString()=== dayStringDate.toISOString();
       });
 
       if (!dayData) {

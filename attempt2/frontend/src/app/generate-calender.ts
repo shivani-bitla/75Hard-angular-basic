@@ -10,16 +10,21 @@ export class GenerateCalenderService {
   private http = inject(HttpClient);
   private calendarDataUrl = 'assets/calender-data.json';
   private storageKey = 'calendarState';
-
+  
   // WritableSignal to hold the calendar data
   public calendarState: WritableSignal<DaysCalender | null> = signal(null);
-
+  
   constructor() {
+    console.log('GenerateCalenderService initialized');
+    console.log(this.storageKey);
+    console.log(this.calendarState());
+    this.fetchCalendarData();
     this.loadStateFromStorage();
     this.setupBeforeUnloadSave();
-
+    
     // Effect to automatically save state to localStorage whenever it changes
     effect(() => {
+      console.log(this.calendarState());
       const state = this.calendarState();
       if (state) {
         this.saveStateToStorage(state);
@@ -29,6 +34,7 @@ export class GenerateCalenderService {
   }
 
   private loadStateFromStorage(): void {
+    
     const savedState = localStorage.getItem(this.storageKey);
     if (savedState) {
       const calendar = JSON.parse(savedState);

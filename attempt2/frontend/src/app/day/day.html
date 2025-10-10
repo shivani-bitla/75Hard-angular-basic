@@ -1,21 +1,20 @@
-<!-- src/app/day/day.html -->
-<div class="day-details">
-  @if (dayWithTaskNames) {
-    <h2>Tasks for {{ dayWithTaskNames.date | date }}</h2>
-    <div class="task-list">
+<section>
+  <div class="day-details">
+    @if (dayWithTaskNames) {
+      <h2>Tasks for {{ dayWithTaskNames.date | date }}</h2>
       @for (task of dayWithTaskNames.tasks; track task.id) {
         <div-show
-        [status]="task.status"
-        (buttonClick)="onButtonClick(task)"
-        [tooltipText]="task.name"
-        class="task-button"
-        >
-        {{ task.name }}
-      </div-show>
-      }
-    </div>
-  } @else {
-    <p>No details found for this day.</p>
-    <!-- Consider adding a button to go back or create new data -->
+          [status]="task.status"
+          (buttonClick)="onButtonClick(task)"
+          [tooltipText]="task.name"
+          class="task-button"
+          >
+          {{ task.name }}
+        </div-show>
   }
+} @else {
+  <p>No details found for this day.</p>
+  <!-- Consider adding a button to go back or create new data -->
+}
 </div>
+</section>

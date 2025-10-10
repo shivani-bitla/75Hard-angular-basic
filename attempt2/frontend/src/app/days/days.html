@@ -1,16 +1,20 @@
-<!-- src/app/days/days.html -->
-<p>days works!</p>
-@if (calendar()) {
-  <h2>{{ calendar()?.username   }}'s Calendar</h2>
+
+<section >
+  <p>days works!</p>
+
+  @if (calendar()) {
+    <h2>{{ calendar()?.username   }}'s Calendar</h2>
   <div  class="week-day">
     @for (day of calendar()?.calendarData; track day.date) {
       <div-show
         [status]="getDayStatus(day)"
-        [tooltipText]="day?.date | date"
-      >
-      </div-show>
+        [tooltipText]="day?.date | date "
+        [dateFormated]="day.date.toString().split('T')[0]"
+      ></div-show>
     }
   </div>
 } @else {
   <p>Loading calendar data...</p>
 }
+
+  </section>

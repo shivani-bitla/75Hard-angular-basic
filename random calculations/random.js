@@ -27,7 +27,7 @@ function getMockCalendar(username) {
   const calendarData = [];
   const numDays = 90; // Generate data for 90 days total
   const statuses = ['complete', 'untouched'];
-
+  
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 

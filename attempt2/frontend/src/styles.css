@@ -1,1 +1,23 @@
 /* You can add global styles to this file, and also import other style files */
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 10px;
+  background-color: #f4f4f4;
+  text-align: center;
+  place-self: center;
+}
+div{
+  display: block;
+  width: 100dvw;
+  text-align: center;
+  place-self: center;
+}
+section{
+  display: grid;
+  grid-template-columns: 1fr;
+  place-items: center;
+  width: 100dvw;
+  min-width: 344px;
+  height: 100dvw;
+}

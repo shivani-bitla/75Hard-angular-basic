@@ -47,5 +47,9 @@ export class Days implements OnInit {
     return 'incomplete';
   }
 
+  formatDate(date: Date): string {
+    const datePipe = new DatePipe('en-US');
+    return datePipe.transform(date, 'yyyy-MM-dd') || '';
+  }
   
 }
