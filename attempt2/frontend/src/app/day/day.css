@@ -2,19 +2,21 @@
 
 .task-button {
   color: black;
-  max-height: 300px; /* Adjust as needed */
-  text-align: left;
+  height :15dvh;
+  max-height: fit-content; /* Adjust as needed */
+  padding: 10px;
 }
 .task-button.completed {
   background-color: #4CAF50; /* Green */
   color: white;
 }
 .task-list{
-  width :300px;
-  height:50px;
-  
+  width:100dvw;
+  height: 100dvh;
 }
 .day-details{
   width:80dvw;
-  height: 100dvh;
+  display: grid;
+  grid-template-columns: 1fr;
+  min-width:300px;
 }

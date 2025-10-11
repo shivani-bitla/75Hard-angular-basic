@@ -19,5 +19,8 @@ section{
   place-items: center;
   width: 100dvw;
   min-width: 344px;
-  height: 100dvw;
+  height: max-content;
+}
+button {
+  width:100%;
 }

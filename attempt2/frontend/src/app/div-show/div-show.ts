@@ -17,13 +17,17 @@ import { RouterLink } from '@angular/router';
   `,
   styles: [`
     button {
-      height: 40px;      /* Set a fixed height to make it square */
+      height: 40px;
       border: none;
       padding: 0;
       cursor: pointer;
       min-width:40px;
-      max-width:300px;       /* Set a fixed width to make it square */
-      border-radius: 8px; /* Optional: for a rounded square look */
+      max-width:300px;      
+      border-radius: 8px; 
+      place-self:center;
+      text-align:center;
+      grid-row: 1 / -1;
+      grid-column: 1 / -1;
     }
   `],
   standalone: true

@@ -2,7 +2,6 @@
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     min-width: 344px;
-    height: 20dvw;
     width: 20dvw;
     
 
@@ -14,4 +13,5 @@ div-show{
     margin: 3px;
     width:10vdw;
     height :10vdw;
+    max-width: 40px;
 }
