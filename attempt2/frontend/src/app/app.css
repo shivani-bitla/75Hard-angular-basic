@@ -7,7 +7,7 @@
 .container2{
     background-color:#F1FFE3 ;
 } 
-button,a{
+button{
   min-height: 40px;
   background-color: rgb(186, 248, 248);
   border-radius: 5px;
@@ -15,12 +15,4 @@ button,a{
   color: black;
   font-size: 16px;
   cursor: pointer;
-  place-self: center;
-}
-a{
-  text-decoration: none;
-  background-color: #00000000;
-  padding: 10px;
-  margin: 5px;
-
 }

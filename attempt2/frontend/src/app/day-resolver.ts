@@ -13,8 +13,8 @@ export const dayResolver: ResolveFn<DayWithTaskNames | undefined> = (route, stat
   const dateString = route.paramMap.get('date');
   console.log('Resolver called for date:', dateString);
   const dayStringDate = new Date( Date.parse(dateString || ''));
+  dayStringDate.setHours(0, 0, 0, 0);
   console.log('Parsed date:', (dayStringDate));
-    dayStringDate.setHours(0, 0, 0, 0);
   console.log('Parsed date:', (dayStringDate.toISOString()));
 
 
@@ -29,10 +29,12 @@ export const dayResolver: ResolveFn<DayWithTaskNames | undefined> = (route, stat
       console.log('Calendar data:', calendar);
       
 
-      const dayData = calendar.calendarData.find(d => {     
-        console.log(d.date===dayStringDate, d.date, dayStringDate);
-         
-        return  d.date.toISOString()=== dayStringDate.toISOString();
+      const dayData = calendar.calendarData.find(d => {    
+        if(d.date.toString()==dayStringDate.toString()){
+          return  d.date.toString()==dayStringDate.toString();
+        }else{
+          return d.date.toString()===dateString
+        }                          
       });
 
       if (!dayData) {

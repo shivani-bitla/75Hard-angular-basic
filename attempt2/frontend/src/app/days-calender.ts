@@ -23,3 +23,19 @@ export interface DaysCalender {
   calendarData: DayData[];
   taskList: TaskList[];
 }
+// // New, focused interface for the calendar data
+// export interface DaysCalender {
+//   // username is no longer here
+//   calendarData: DayData[];
+//   taskList: TaskList[];
+// }
+
+// // Separate interface for user data
+// export interface User {
+//   username: string;
+//   // Other potential user details
+//   email: string;
+//   id: string;
+//   // Nest the calendar interface, as the calendar belongs to a user
+//   calendar: DaysCalender;
+// }

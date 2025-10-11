@@ -23,7 +23,6 @@ export class Days implements OnInit {
   
   
   completeStatus: TaskStatus = 'complete';
-  private router = inject(Router);
 
   constructor() {
     console.log('Days component initialized');
@@ -37,6 +36,8 @@ export class Days implements OnInit {
   }
 
   getDayStatus(day: DayData): DayStatus {
+    console.log("button clicked to change status");
+    
     const completeCount = day.tasks.filter(task => task.status === 'complete').length;
     const untouchedCount = day.tasks.filter(task => task.status === 'untouched').length;
     const totalTasks = day.tasks.length;

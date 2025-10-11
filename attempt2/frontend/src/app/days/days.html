@@ -1,7 +1,5 @@
 
 <section >
-  <p>days works!</p>
-
   @if (calendar()) {
     <h2>{{ calendar()?.username   }}'s Calendar</h2>
   <div  class="week-day">
@@ -9,7 +7,7 @@
       <div-show
         [status]="getDayStatus(day)"
         [tooltipText]="day?.date | date "
-        [dateFormated]="day.date.toString().split('T')[0]"
+        [dateFormated]="day.date.toISOString()"
       ></div-show>
     }
   </div>

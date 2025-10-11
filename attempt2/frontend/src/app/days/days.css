@@ -12,6 +12,6 @@ div-show{
     place-self:center;
     margin: 3px;
     width:10vdw;
-    height :10vdw;
+    height :calc(width);
     max-width: 40px;
 }

@@ -39,14 +39,10 @@ export class Day implements OnInit {
   onButtonClick(task: Task): void {
     console.log('Button clicked for task:', task);
     task.status = task.status === 'complete' ? 'untouched' : 'complete';
-    console.log('Task status changed to:', task.status);
-
-    // Call the service method to update the in-memory data
+    console.log('Task status changed to:', task.status,"need to save");
     if (this.dayWithTaskNames) {
       this.calenderService.updateTaskStatus(this.dayWithTaskNames.date, task.id, task.status);
     }
-    
-    // Because you're using OnPush, manually trigger change detection
     this.cdr.markForCheck();
     console.log('Button changed to:', task.status);
   }

@@ -5,8 +5,9 @@
       @for (task of dayWithTaskNames.tasks; track task.id) {
         <div-show
           [status]="task.status"
-          (buttonClick)="onButtonClick(task)"
+          (click)="onButtonClick(task)"
           [tooltipText]="task.name"
+          [disable]="true"
           class="task-button" 
           >
           {{ task.name }}
@@ -14,6 +15,7 @@
   }
 } @else {
   <p>No details found for this day.</p>
+  
   <!-- Consider adding a button to go back or create new data -->
 }
 </div>
