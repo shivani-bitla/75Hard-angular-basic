@@ -24,3 +24,8 @@ section{
 button {
   width:100%;
 }
+a{
+  place-self: center center;
+  text-align: center;
+  font-weight: 700 ;
+}
