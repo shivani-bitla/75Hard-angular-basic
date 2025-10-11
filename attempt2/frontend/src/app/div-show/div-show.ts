@@ -10,7 +10,8 @@ import { RouterLink } from '@angular/router';
   template: `
     <button [ngStyle]="currentStyles"  (click)="onButtonClick()" [title]="tooltipText"  
       [attr.aria-label]="tooltipText" >
-      <a [routerLink]="['/day/', (dateFormated)]" (click)="$event.stopPropagation()" style="text-decoration: none; color: inherit; display: block; width: 100%; height: 100%;">
+          <a [routerLink]="['/day/', (dateFormated)]" (click)="$event.stopPropagation()" [disableLink]='disable' 
+        style="text-decoration: none; color: inherit; display: block; width: 100%; height: 100%;">
         <ng-content></ng-content>
       </a>  
     </button>
@@ -39,6 +40,7 @@ export class DivShow implements OnChanges {
   @Input() dateUnformat: DayData | undefined | null; // Date format for router link
   @Output() buttonClick = new EventEmitter<void>(); // Renamed for clarity
   @Input() dateFormated: string | undefined | null;
+  @Input() disable : boolean=false;
   
   constructor() {
   }
