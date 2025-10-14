@@ -1,7 +1,7 @@
 // src/app/div-show/div-show.ts
 import { Component, EventEmitter, input, Input, OnChanges, Output } from '@angular/core';
 import { NgStyle, CommonModule } from '@angular/common';
-import { DayData, DayStatus  } from '../days-calender';
+import { DayData, DayStatus  } from '../calender-interface';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -65,7 +65,7 @@ export class DivShow implements OnChanges {
 
   private setCurrentStyles(): void {
     const colorMap = {
-      'complete': '#135e4b89',
+      'complete': '#135e4be6',
       'incomplete': '#a1d8b59a',
       'untouched': '#CCDCDB',
       'lastLeft': '#4CB572'

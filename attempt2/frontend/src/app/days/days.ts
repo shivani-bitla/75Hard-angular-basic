@@ -1,15 +1,15 @@
 // src/app/days/days.component.ts
-import { Component, OnInit, inject, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, inject, ChangeDetectionStrategy, signal } from '@angular/core';
 import { DivShow } from '../div-show/div-show';
-import { DaysCalender, DayData, DayStatus, TaskStatus } from '../days-calender';
+import { DaysCalender, DayData, DayStatus, TaskStatus } from '../calender-interface';
 import { DatePipe, CommonModule } from '@angular/common'; // AsyncPipe is no longer needed
-import { Router } from '@angular/router';
-import { GenerateCalenderService } from '../generate-calender';
-import { RouterLink } from '@angular/router';
+import { CalenderService } from '../calender';
+import { RouterOutlet } from "@angular/router";
+import { User } from '../user';
 
 @Component({
   selector: 'app-days',
-  imports: [DivShow, DatePipe, CommonModule, RouterLink],
+  imports: [DivShow, DatePipe, CommonModule, RouterOutlet],
   templateUrl: './days.html',
   styleUrl: './days.css',
   standalone: true,
@@ -19,25 +19,31 @@ import { RouterLink } from '@angular/router';
 })
 export class Days implements OnInit {
   // Directly access the service's signal
-  calendar = inject(GenerateCalenderService).calendarState;
+  userState = inject(CalenderService).userState;
+  currentuser: User|null=null;
+
   
   
   completeStatus: TaskStatus = 'complete';
 
   constructor() {
     console.log('Days component initialized');
-    console.log('Current calendar state:', this.calendar());
-    console.log('Current calendar state:', this.calendar()?.calendarData);
-
+    console.log('Current calendar state:', this.userState()?.filter(user=>user.username==='joe'));
+    this.userState()?.map(user=>{if(user.username==='joe'){ this.currentuser=user}});
+    console.log(
+      'currentuser',
+      this.currentuser
+    );
   }
 
   ngOnInit(): void {
     // No need for a separate subscription, the signal is already active
+    
   }
 
-  getDayStatus(day: DayData): DayStatus {
-    console.log("button clicked to change status");
-    
+
+
+  getDayStatus(day: DayData): DayStatus {    
     const completeCount = day.tasks.filter(task => task.status === 'complete').length;
     const untouchedCount = day.tasks.filter(task => task.status === 'untouched').length;
     const totalTasks = day.tasks.length;

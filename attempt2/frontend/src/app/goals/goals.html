@@ -1,1 +1,7 @@
 <p>goals works!</p>
+<section>
+    @for(task of taskList(); track task.order){
+        <input title={{task.name}}  value={{task.name}} />
+    }
+    <button (click)="onConfirm()">confirm</button>
+</section>

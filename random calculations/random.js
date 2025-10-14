@@ -5,7 +5,8 @@ import fs from 'fs';
  * @typedef {{ id: number, status: TaskStatus }} Task
  * @typedef {{ id: number, name: string, order: number }} TaskList
  * @typedef {{ date: string, tasks: Task[] }} DayData
- * @typedef {{ username: string, calendarData: DayData[], taskList: TaskList[] }} DaysCalender
+ * @typedef {{ calendarData: DayData[], taskList: TaskList[] }} DaysCalender
+ * @typedef {{ username: string, email: string, id: string, calendar: DaysCalender }} User
  */
 
 /**
@@ -19,15 +20,14 @@ function getRandomInt(min, max) {
 }
 
 /**
- * Generates a complete mock calendar for a user, with all data randomized internally.
- * @param {string} username The username for the calendar.
+ * Generates a mock calendar for a user.
  * @returns {DaysCalender} A mock DaysCalender object.
  */
-function getMockCalendar(username) {
+function getMockCalendar() {
   const calendarData = [];
   const numDays = 90; // Generate data for 90 days total
   const statuses = ['complete', 'untouched'];
-  
+
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
@@ -46,23 +46,20 @@ function getMockCalendar(username) {
     order: index + 1
   }));
 
-  const numRandomDays = getRandomInt(3, 70);
   const startDate = new Date();
-  startDate.setDate(today.getDate() - numRandomDays);
+  startDate.setDate(today.getDate() - 30); // Start 30 days in the past
   startDate.setHours(0, 0, 0, 0);
-  let randomStatus='untouched';
-  console.log('Generating data starting from:', startDate.toISOString());
 
-  // Generate random data for past and current days
+  // Generate data for past and future days
   for (let i = 0; i < numDays; i++) {
-    const randomDate = new Date(startDate);
-    randomDate.setDate(startDate.getDate() + i);
-    randomDate.setHours(0, 0, 0, 0);
+    const currentDay = new Date(startDate);
+    currentDay.setDate(startDate.getDate() + i);
+    currentDay.setHours(0, 0, 0, 0);
+    
+    const isPast = currentDay.getTime() < today.getTime();
 
     const tasks = taskList.map(task => {
-      if (randomDate < today) {
-        randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
-      }
+      const randomStatus = isPast ? statuses[Math.floor(Math.random() * statuses.length)] : 'untouched';
       return {
         id: task.id,
         status: randomStatus
@@ -70,52 +67,43 @@ function getMockCalendar(username) {
     });
 
     calendarData.push({
-      date: randomDate.toISOString(),
+      date: currentDay.toISOString(),
       tasks: tasks
     });
   }
 
-  // // Generate fixed data for future days
-  // const startFixedDate = new Date(today);
-
-  // for (let i = 0; i < numDays - numRandomDays; i++) {
-  //   const futureDate = new Date(startFixedDate);
-  //   futureDate.setDate(startFixedDate.getDate() + i);
-
-  //   const fixedTasks = taskList.map(task => ({
-  //     id: task.id,
-  //     status: 'untouched'
-  //   }));
-
-  //   calendarData.push({
-  //     date: futureDate.toISOString(),
-  //     tasks: fixedTasks
-  //   });
-  // }
-
   return {
-    username,
     calendarData,
     taskList
   };
 }
 
 /**
- * Generates mock data and saves it to a JSON file.
- * @param {string} username The username for the calendar.
+ * Generates mock data for multiple users and saves it to a JSON file.
+ * @param {string[]} usernames An array of usernames for which to generate data.
  * @param {string} filename The name of the file to save (e.g., 'calender-data.json').
  */
-function saveMockCalendarToJson(username, filename) {
-  const calendar = getMockCalendar(username);
-  const jsonString = JSON.stringify(calendar, null, 2);
+function saveMockUsersToJson(usernames, filename) {
+  const users = usernames.map((username, index) => {
+    const calendar = getMockCalendar();
+    return {
+      id: `user${index + 1}`,
+      username: username,
+      email: `${username.toLowerCase()}@example.com`,
+      calendar: calendar
+    };
+  });
+
+  const jsonString = JSON.stringify(users, null, 2);
 
   fs.writeFile(filename, jsonString, (err) => {
     if (err) {
       console.error('Error writing file:', err);
     } else {
-      console.log(`Successfully saved mock data to ${filename}`);
+      console.log(`Successfully saved mock user data to ${filename}`);
     }
   });
 }
 
-saveMockCalendarToJson('joe', './calender-data.json');
+// Generate and save data for multiple users
+saveMockUsersToJson(['joe', 'jane', 'admin'], './calender-data.json');
