@@ -37,6 +37,7 @@ export class CalenderService {
     if (savedState) {
       try {
         const users: User[] = JSON.parse(savedState);
+        console.log("users-",users)
         if (Array.isArray(users)) {
           users.forEach(user => {
             if (user.calendar?.calendarData) {

@@ -1,18 +1,19 @@
 <section>
+  <p>calendar </p>
   <!-- Use a conditional check for the userState signal -->
-  @if (currentuser) {
-    <h2>{{ currentuser.username }}'s Calendar</h2>
-    <div class="week-day">
-      @for (day of currentuser.calendar.calendarData; track day.date) {
-        <div-show
-          [status]="getDayStatus(day)"
-          [tooltipText]="day?.date | date "
-          [dateFormated]="(formatDate(day.date))"
-        ></div-show>
-      }
-    </div>
+  <h2>{{ currentUser()?.length }}'s Calendar</h2>
+  <div class="week-day">
+    <!-- @for (day of currentUser.calendar.calendarData; track day.date) {
+      <div-show
+        [status]="getDayStatus(day)"
+        [tooltipText]="day?.date | date "
+        [dateFormated]="(formatDate(day.date))"
+      ></div-show>
+    } -->
+  </div>
+  <!-- @if (userSignal) {
   } @else {
     <p>Loading calendar data...</p>
-  }
+  } -->
   <router-outlet></router-outlet>
 </section>

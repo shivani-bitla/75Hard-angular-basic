@@ -1,0 +1,17 @@
+<p>working right now </p>
+<p>userlogin</p>
+<p>user details</p>
+<p>tasks</p>
+<p>calendar</p>
+<p>chat</p>
+<nav>
+    <h1>My Auth App</h1>
+    @if (user$ | async; as user) {
+        <p>Welcome, {{ user.email }}</p>
+        <button (click)="logout()">Logout</button>
+    } @else {
+        <button (click)="loginWithGoogle()">Login with Google</button>
+    }
+    
+</nav>
+<router-outlet></router-outlet>

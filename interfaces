@@ -1,0 +1,89 @@
+type User @table {
+  username: String!
+  displayName: String!
+  email: String!
+  createdAt: Timestamp!
+  profilePictureUrl: String
+  bio: String
+  isPublicProfile: Boolean! @default(value: true)
+}
+
+type Post @table {
+  author: User!
+  content: String!
+  postType: String!
+  createdAt: Timestamp!
+  imageUrl: String
+  videoUrl: String
+  isPublic: Boolean! @default(value: true)
+  challenge: Challenge!
+}
+
+type Comment @table {
+  author: User!
+  post: Post!
+  text: String!
+  createdAt: Timestamp!
+}
+
+type Like @table(key: ["user", "post"]) {
+  user: User!
+  post: Post!
+  createdAt: Timestamp!
+}
+
+type Follow @table(key: ["follower", "followed"]) {
+  follower: User!
+  followed: User!
+  createdAt: Timestamp!
+}
+
+type Message @table {
+  sender: User!
+  receiver: User!
+  content: String!
+  createdAt: Timestamp!
+}
+
+type Task @table {
+  title: String!
+  description: String
+  createdBy: User!
+  createdAt: Timestamp!
+  dueDate: Timestamp
+  isPublic: Boolean! @default(value: false)
+}
+
+type UserTask @table(key: ["user", "task"]) {
+  user: User!
+  task: Task!
+  status: String!
+  completedAt: Timestamp
+  isPublic: Boolean! @default(value: false)
+}
+
+type Challenge @table {
+  name: String!
+  description: String
+  createdBy: User!
+  createdAt: Timestamp!
+  startDate: Timestamp!
+  endDate: Timestamp
+  rules: String
+  isPublic: Boolean! @default(value: false)
+}
+
+type ChallengeParticipation @table(key: ["user", "challenge"]) {
+  user: User!
+  challenge: Challenge!
+  joinedAt: Timestamp!
+  status: String!
+  completedAt: Timestamp
+  isPublic: Boolean! @default(value: false)
+}
+
+type ChallengeTask @table(key: ["challenge", "task"]) {
+  challenge: Challenge!
+  task: Task!
+  order: Int
+}
