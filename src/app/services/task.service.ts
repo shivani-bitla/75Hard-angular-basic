@@ -1,145 +1,208 @@
-import { Injectable, signal, computed } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, tap, catchError, of } from 'rxjs';
+import { Injectable, inject } from '@angular/core';
+import { 
+  Firestore, 
+  doc, 
+  getDoc, 
+  setDoc, 
+  updateDoc, 
+  collection, 
+  query, 
+  where, 
+  getDocs, 
+  deleteDoc 
+} from '@angular/fire/firestore';
+import { Auth, user } from '@angular/fire/auth';
 
-export interface Task {
+export interface TaskConfig {
+  id: string;
   name: string;
-  completed: boolean;
 }
 
-export interface DailyProgress {
-  date: string;
-  tasks: Task[];
-  allCompleted: boolean;
-}
+export type TaskLogs = Record<string, Record<string, boolean>>;
 
-export interface StartDate {
-  date: string;
-}
-
-export interface UpdateResponse {
-  message: string;
+export interface UserData {
+  startDate: string;
+  tasksConfig: TaskConfig[];
+  logs: TaskLogs;
+  username?: string;
+  displayName?: string;
+  onboarded?: boolean; 
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
-  private apiUrl = 'http://localhost:8000';
-  public readonly initialTasks: Task[] = [
-    { name: '45 mins outdoor workout', completed: false },
-    { name: '45 mins indoor workout', completed: false },
-    { name: 'Follow a meal plan', completed: false },
-    { name: 'Drink 1 gallon of water', completed: false },
-    { name: 'Upload to Instagram', completed: false },
-    { name: 'Build frontend app & upload to GitHub', completed: false }
-  ];
+  private firestore = inject(Firestore);
+  private auth = inject(Auth);
+  
+  // Expose current auth user as an observable
+  user$ = user(this.auth);
 
-  private progress = signal<DailyProgress[]>([]);
-  private startDate = signal<string>(new Date().toISOString().split('T')[0]);
-  tasks = signal<Task[]>(this.initialTasks);
-  progressComputed = computed(() => this.progress());
-  startDateComputed = computed(() => this.startDate());
-
-  constructor(private http: HttpClient) {
-    this.loadInitialData();
+  private getDefaultTasks(): TaskConfig[] {
+    return [
+      { id: 'task-1', name: '45 mins outdoor workout' },
+      { id: 'task-2', name: '45 mins indoor workout' },
+      { id: 'task-3', name: 'Follow a meal plan' },
+      { id: 'task-4', name: 'Drink 1 gallon of water' },
+      { id: 'task-5', name: 'Journal for 10 minutes' },
+      { id: 'task-6', name: 'Read for 5 pages' }
+    ];
   }
 
-  private loadInitialData() {
-    this.http.get<DailyProgress[]>(`${this.apiUrl}/progress`).pipe(
-      tap(() => console.log('Fetching progress from', `${this.apiUrl}/progress`)),
-      catchError(err => {
-        console.error('Progress fetch failed:', err.message, err.status, err.url);
-        return of([]);
-      })
-    ).subscribe(progress => {
-      console.log('Progress loaded:', progress);
-      this.progress.set(progress);
+  // ---------------------------------------------------------------------------
+  // CHALLENGE & LOGGING METHODS
+  // ---------------------------------------------------------------------------
+
+  // Fetch user data document from Firestore, or initialize it if it's their first time
+  async getUserData(userId: string): Promise<UserData> {
+    try {
+      const docRef = doc(this.firestore, `users/${userId}`);
+      const docSnap = await getDoc(docRef);
+
+      if (docSnap.exists()) {
+        return docSnap.data() as unknown as UserData;
+      } else {
+        const currentUser = this.auth.currentUser;
+        const emailPrefix = currentUser?.email 
+          ? currentUser.email.split('@')[0].toLowerCase() 
+          : `user_${userId.substring(0, 5)}`;
+        
+        const initialData: UserData = {
+          startDate: new Date().toLocaleDateString('en-CA'),
+          tasksConfig: this.getDefaultTasks(),
+          logs: {},
+          username: emailPrefix,
+          displayName: currentUser?.displayName || 'Challenger',
+          onboarded: false // <-- Triggers onboarding modal for new users
+        };
+        await setDoc(docRef, initialData);
+        return initialData;
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      throw error;
+    }
+  }
+
+  // Save onboarding setup (start date, customized tasks, and set onboarded to true)
+  async completeOnboarding(userId: string, startDate: string, tasksConfig: TaskConfig[]): Promise<void> {
+    const docRef = doc(this.firestore, `users/${userId}`);
+    await updateDoc(docRef, {
+      startDate,
+      tasksConfig,
+      onboarded: true
     });
+  }
 
-    this.http.get<StartDate>(`${this.apiUrl}/start-date`).pipe(
-      tap(() => console.log('Fetching start date from', `${this.apiUrl}/start-date`)),
-      catchError(err => {
-        console.error('Start date fetch failed:', err.message, err.status, err.url);
-        return of({ date: new Date().toISOString().split('T')[0] });
-      })
-    ).subscribe(startDate => {
-      console.log('Start date loaded:', startDate.date);
-      this.startDate.set(startDate.date);
+  // Update a task's display name globally using its unique ID
+  async updateTaskName(userId: string, taskId: string, newName: string, currentTasks: TaskConfig[]): Promise<TaskConfig[]> {
+    const updatedTasks = currentTasks.map(t => t.id === taskId ? { ...t, name: newName } : t);
+    const docRef = doc(this.firestore, `users/${userId}`);
+    await updateDoc(docRef, { tasksConfig: updatedTasks });
+    return updatedTasks;
+  }
+
+  // Save completion state for a specific task ID on a given date string (YYYY-MM-DD)
+  async updateTaskLog(userId: string, dateStr: string, taskId: string, completed: boolean, currentLogs: TaskLogs): Promise<TaskLogs> {
+    const updatedLogs: TaskLogs = {
+      ...currentLogs,
+      [dateStr]: {
+        ...(currentLogs[dateStr] || {}),
+        [taskId]: completed
+      }
+    };
+    const docRef = doc(this.firestore, `users/${userId}`);
+    await updateDoc(docRef, { logs: updatedLogs });
+    return updatedLogs;
+  }
+
+  // Update the challenge start date
+  async updateStartDate(userId: string, newDate: string): Promise<void> {
+    const docRef = doc(this.firestore, `users/${userId}`);
+    await updateDoc(docRef, { startDate: newDate });
+  }
+
+  // Clear all challenge logs for a fresh reset
+  async resetProgress(userId: string): Promise<void> {
+    const docRef = doc(this.firestore, `users/${userId}`);
+    await updateDoc(docRef, { logs: {} });
+  }
+
+  // ---------------------------------------------------------------------------
+  // FRIENDS & ACCOUNTABILITY NETWORK METHODS
+  // ---------------------------------------------------------------------------
+
+  // 1. Search for a user by their unique username
+  async searchUserByUsername(username: string): Promise<{ uid: string; displayName: string; username: string } | null> {
+    const usersRef = collection(this.firestore, 'users');
+    const q = query(usersRef, where('username', '==', username.trim().toLowerCase()));
+    const querySnapshot = await getDocs(q);
+
+    if (querySnapshot.empty) return null;
+    
+    const docSnap = querySnapshot.docs[0];
+    const data = docSnap.data();
+    return {
+      uid: docSnap.id,
+      displayName: data['displayName'],
+      username: data['username']
+    };
+  }
+
+  // 2. Send a friend request
+  async sendFriendRequest(targetUserId: string, currentUser: { uid: string; displayName: string }): Promise<void> {
+    const requestRef = doc(this.firestore, `users/${targetUserId}/friendRequests/${currentUser.uid}`);
+    await setDoc(requestRef, {
+      uid: currentUser.uid,
+      displayName: currentUser.displayName,
+      timestamp: new Date().toISOString()
     });
   }
 
-  updateTask(date: string, taskIndex: number, completed: boolean): Observable<UpdateResponse> {
-    const task: Task = { ...this.initialTasks[taskIndex], completed };
-    return this.http.put<UpdateResponse>(`${this.apiUrl}/progress/${date}`, task, { params: { task_index: taskIndex } })
-      .pipe(
-        tap(() => console.log('Updating task for', date, 'index', taskIndex)),
-        tap(() => {
-          this.tasks.update(tasks => {
-            const updatedTasks = [...tasks];
-            updatedTasks[taskIndex] = { ...updatedTasks[taskIndex], completed };
-            return updatedTasks;
-          });
-          this.loadInitialData(); // Refresh progress for ProgressChartComponent
-        }),
-        catchError(err => {
-          console.error('Task update failed:', err.message, err.status, err.url);
-          return of({ message: 'Update failed' });
-        }),
-        tap(() => console.log('Task update completed for', date))
-      );
+  // 3. Accept a friend request (adds mutual friendship and clears request)
+  async acceptFriendRequest(currentUserId: string, requesterId: string, requesterName: string, currentUserName: string): Promise<void> {
+    // Add requester to current user's friends list
+    const myFriendRef = doc(this.firestore, `users/${currentUserId}/friends/${requesterId}`);
+    await setDoc(myFriendRef, { uid: requesterId, displayName: requesterName });
+
+    // Add current user to requester's friends list (mutual)
+    const theirFriendRef = doc(this.firestore, `users/${requesterId}/friends/${currentUserId}`);
+    await setDoc(theirFriendRef, { uid: currentUserId, displayName: currentUserName });
+
+    // Delete the pending request
+    const requestRef = doc(this.firestore, `users/${currentUserId}/friendRequests/${requesterId}`);
+    await deleteDoc(requestRef);
   }
 
-  getProgressForDate(date: string): Observable<DailyProgress | undefined> {
-    return this.http.get<DailyProgress>(`${this.apiUrl}/progress/${date}`)
-      .pipe(
-        tap(progress => console.log('Progress for', date, ':', progress)),
-        tap(progress => {
-          if (progress) {
-            this.progress.update(p => {
-              const existing = p.find(dp => dp.date === date);
-              if (!existing) p.push(progress);
-              return [...p];
-            });
-            this.tasks.set(progress.tasks); // Ensure tasks signal is updated
-          } else {
-            this.tasks.set([...this.initialTasks]);
-          }
-        }),
-        catchError(err => {
-          console.error('Progress fetch for', date, 'failed:', err.message, err.status, err.url);
-          return of(undefined);
-        })
-      );
+  // 4. Get list of accepted friends and their progress data
+  async getFriendsList(userId: string): Promise<any[]> {
+    const friendsRef = collection(this.firestore, `users/${userId}/friends`);
+    const snapshot = await getDocs(friendsRef);
+    
+    const friends = [];
+    for (const docSnap of snapshot.docs) {
+      const friendId = docSnap.data()['uid'];
+      const friendData = await this.getUserData(friendId);
+      friends.push({
+        uid: friendId,
+        displayName: docSnap.data()['displayName'],
+        data: friendData
+      });
+    }
+    return friends;
   }
 
-  resetProgress() {
-    this.http.delete(`${this.apiUrl}/progress`)
-      .pipe(
-        tap(() => console.log('Resetting progress')),
-        tap(() => {
-          this.progress.set([]);
-          this.startDate.set(new Date().toISOString().split('T')[0]);
-          this.tasks.set([...this.initialTasks]);
-        }),
-        catchError(err => {
-          console.error('Reset failed:', err.message, err.status, err.url);
-          return of(null);
-        })
-      )
-      .subscribe();
+  // 5. Get incoming friend requests
+  async getFriendRequests(userId: string): Promise<any[]> {
+    const requestsRef = collection(this.firestore, `users/${userId}/friendRequests`);
+    const snapshot = await getDocs(requestsRef);
+    return snapshot.docs.map(doc => doc.data());
   }
 
-  setStartDate(date: string) {
-    this.http.put(`${this.apiUrl}/start-date`, { date })
-      .pipe(
-        tap(() => console.log('Setting start date to', date)),
-        tap(() => this.startDate.set(date)),
-        catchError(err => {
-          console.error('Start date update failed:', err.message, err.status, err.url);
-          return of(null);
-        })
-      )
-      .subscribe();
+  // Update the global tasks configuration list
+  async updateTaskConfig(userId: string, tasksConfig: TaskConfig[]): Promise<void> {
+    const docRef = doc(this.firestore, `users/${userId}`);
+    await updateDoc(docRef, { tasksConfig: tasksConfig });
   }
 }
