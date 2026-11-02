@@ -1,59 +1,56 @@
-# SeventyFiveHard
+# 75 Hard Tracker
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.6.
+Angular + Firebase app for tracking a daily habit challenge. Each user sets a start date and a task list, ticks tasks off per day, and can add friends to see their progress.
 
-## Development server
+## Stack
 
-To start a local development server, run:
+- Angular 20 (standalone components, lazy-loaded routes, functional guard)
+- AngularFire: Firebase Auth + Firestore
+- Karma/Jasmine (default setup, no tests written)
 
-```bash
-ng serve
+## Structure
+
+```
+src/app/
+  pages/
+    landing.ts              sign-in
+    onboarding.ts           first-run: start date + tasks
+    challenge-dashboard.ts  daily checklist + progress
+    task-edit.ts            rename/edit tasks
+    friends.ts              search users, requests, friends' progress
+  services/
+    task.service.ts         all Firestore reads/writes
+    auth.guard.ts           blocks /dashboard and /friends when signed out
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Data model
 
-## Code scaffolding
+One document per user at `users/{uid}`:
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```ts
+interface UserData {
+  startDate: string;                              // YYYY-MM-DD
+  tasksConfig: { id: string; name: string }[];
+  logs: Record<string, Record<string, boolean>>;  // logs[date][taskId]
+  username?: string;
+  displayName?: string;
+  onboarded?: boolean;
+}
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+New users get 6 default tasks and `onboarded: false`, which opens the onboarding step.
+
+## Run
 
 ```bash
-ng generate --help
+npm install
+npm start          # http://localhost:4200
 ```
 
-## Building
+Firebase config is in `src/app/environments/environment.ts`.
 
-To build the project run:
+## Known issues
 
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Rules in `firestore.rules` must be deployed: `firebase deploy --only firestore:rules`. Signed-in users can read all profiles (needed for friend search).
+- `project_explanation.md` and `code_snippets.ts` describe an older version (DailyLog, ProgressChart, HttpClient backend). Out of date.
+- No unit tests.
